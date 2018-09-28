@@ -19,24 +19,19 @@ class Login  extends CI_Controller{
        CUSTOMHEADER::getCustomHeader();
 		
         $postdata = file_get_contents("php://input");
-		$request = json_decode($postdata);
+	$request = json_decode($postdata);
 		
         $user_name = (isset($request->username)!=""? $request->username : "") ; //$this->input->post('username');
         $pass_word = (isset($request->password)!=""? $request->password : "");//$this->input->post('password');
-		
-	
-		
-	//	echo "User" .$request->username;
-		
-		
-        $user = $this->user->getUserByUsernamePwd($user_name,$pass_word);
+	$user = $this->user->getUserByUsernamePwd($user_name,$pass_word);
         if($user!=NULL){
             $token = $this->authorisation->getTokenId();
-            $this->jwtAction($token->web_token,$user);
+            $token_JWT=  $this->jwtAction($token->web_token,$user);
             
             $json_response = array(
                     "msg_status" => 1,
-				    "msg_data" => "",
+				    "msg_data" => "success",
+                                    "token"=>$token_JWT
 				);
         }else{
         $json_response = array(
@@ -46,8 +41,8 @@ class Login  extends CI_Controller{
         }
         
         header('Content-Type: application/json');
-			echo json_encode( $json_response );
-			exit;
+	echo json_encode( $json_response );
+	exit;
     }
     
     public function jwtAction($token_id,$user){
@@ -76,6 +71,7 @@ class Login  extends CI_Controller{
         $secreat_key, // The signing key
         'HS512'     // Algorithm used to sign the token, see https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40#section-3
         );
+        return $jwt;
     }
 	
 	
