@@ -33,7 +33,7 @@ public function __construct()
 
 	  $secretKey = "7lglzCn9kVcGfckWf6jZBJuLGAPwPm3rnti5nxhfDy0=";
 
-	   $jwt = JWT::encode(
+	$jwt = JWT::encode(
         $data,      //Data to be encoded in the JWT
         $secretKey, // The signing key
         'HS512'     // Algorithm used to sign the token, see https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40#section-3

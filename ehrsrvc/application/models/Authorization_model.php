@@ -8,7 +8,17 @@ class Authorization_model extends CI_Model{
                    "project"=>$project ];
       $query = $this->db->select("web_token.*")
                         ->where($where_arr)
-                        ->get(web_token);
+                        ->get("web_token");
       
-  }  
+  }
+  public function getTokenId()
+  {
+      $token="";
+      $query = $this->db->select("web_token.*")->get("web_token");
+      if($query->num_rows()>0){
+          $token = $query->row();
+      }
+      return $token;        
+  }
+  
 }

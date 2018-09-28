@@ -5,9 +5,9 @@ class User_model extends CI_Model {
     public function getUserByUsernamePwd($username,$password)
     {
         $user_detail="";
-        $where_clause =["user_name"=>$this->db->escape_str($username),
-                        "PASSWORD"=>md5($password),
-                        "is_active"=>'Y'
+        $where_clause =["users.user_name"=>$this->db->escape_str($username),
+                        "users.PASSWORD"=>md5($password),
+                        "users.is_active"=>'Y'
                 ];
         $query = $this->db->select("users.*,user_role.*")
                           ->from("users")
