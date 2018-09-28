@@ -15,17 +15,27 @@ class Login  extends CI_Controller{
     public function getLogin()
     {
         $json_response = [];
-        
+		
+       CUSTOMHEADER::getCustomHeader();
+		
         $postdata = file_get_contents("php://input");
-        $user_name = (isset($postdata['username'])!=""?$postdata['username']:"") ; //$this->input->post('username');
-        $pass_word = (isset($postdata['password'])!=""?$postdata['password']:"");//$this->input->post('password');
+		$request = json_decode($postdata);
+		
+        $user_name = (isset($request->username)!=""? $request->username : "") ; //$this->input->post('username');
+        $pass_word = (isset($request->password)!=""? $request->password : "");//$this->input->post('password');
+		
+	
+		
+	//	echo "User" .$request->username;
+		
+		
         $user = $this->user->getUserByUsernamePwd($user_name,$pass_word);
         if($user!=NULL){
             $token = $this->authorisation->getTokenId();
             $this->jwtAction($token->web_token,$user);
             
             $json_response = array(
-                                    "msg_status" => 1,
+                    "msg_status" => 1,
 				    "msg_data" => "",
 				);
         }else{
@@ -67,5 +77,48 @@ class Login  extends CI_Controller{
         'HS512'     // Algorithm used to sign the token, see https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40#section-3
         );
     }
+	
+	
+	public function signin(){
+		//echo "Hello";
+		
+		CUSTOMHEADER::getCustomHeader();
+		$postdata = file_get_contents("php://input");
+		$request = json_decode($postdata);
+		
+		
+		header("Access-Control-Allow-Origin: *");
+		header("Access-Control-Allow-Credentials: true");
+		header("Access-Control-Max-Age: 1000");
+		header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding,x-api-key");
+		header("Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE"); 
+		
+		echo $_SERVER['HTTP_X_API_KEY'];
+		
+		//print_r($request);
+		$json_response = ["asd"=>"dasdasd"];
+		
+		/*
+		$requestApiKey = CUSTOMHEADER::getHeaderX_API_Token();
+		//$serverAPI = $this->apimodel->getAPIkey();
+		$serverAPI = "testtoken";
+
+		if(!empty($serverAPI) && $serverAPI === trim($requestApiKey)){
+			
+			print_r($request);
+			
+		}
+		else{
+
+			header('HTTP/1.0 401 Unauthorized');
+		}
+		
+		*/
+		
+		header('Content-Type: application/json');
+			echo json_encode( $json_response );
+			exit;
+			
+	}
     
 }

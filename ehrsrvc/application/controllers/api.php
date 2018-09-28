@@ -6,7 +6,7 @@ public function __construct()
    parent::__construct();
 
 	$this->load->library('session');
-	$this->load->model('apimodel','apimodel',TRUE);
+	//$this->load->model('apimodel','apimodel',TRUE);
 
  }
 
@@ -58,14 +58,18 @@ public function __construct()
 	$postdata = file_get_contents("php://input");
 	$request = json_decode($postdata);
 	$requestApiKey = CUSTOMHEADER::getHeaderX_API_Token();
-	$serverAPI = $this->apimodel->getAPIkey();
+	//$serverAPI = $this->apimodel->getAPIkey();
+	$serverAPI = "testtoken";
 
 	if(!empty($serverAPI) && $serverAPI === trim($requestApiKey)){
-		$data = $request->data;
+		
+		print_r($request);
+		/*$data = $request->data;
 		$result = $this->apimodel->verifyUserLogin($data);
 		if(sizeof($result)>0){
 			$userdata = $this->apimodel->getSignedInUserData($result->user_id);
 		}
+		*/
 	}
 	else{
 
@@ -81,12 +85,12 @@ public function __construct()
 	$request = json_decode($postdata);
 
 	$requestApiKey = CUSTOMHEADER::getHeaderX_API_Token();
-	$serverAPI = $this->apimodel->getAPIkey();
+	//$serverAPI = $this->apimodel->getAPIkey();
 
 	if(!empty($serverAPI) && $serverAPI === trim($requestApiKey)){
 		$data = $request->data;
 		// Insert Into Patient // Registration Of New patient
-		$register = $this->apimodel->registerNewUser($data);
+		//$register = $this->apimodel->registerNewUser($data);
 		if($register){
 			$result = [
 			"status"=>200,
