@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ehr-presentation": {
+    "ehrsystem": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ehr-presentation",
+            "outputPath": "dist/ehrsystem",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -50,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ehr-presentation:build"
+            "browserTarget": "ehrsystem:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ehr-presentation:build:production"
+              "browserTarget": "ehrsystem:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ehr-presentation:build"
+            "browserTarget": "ehrsystem:build"
           }
         },
         "test": {
@@ -95,7 +95,7 @@
         }
       }
     },
-    "ehr-presentation-e2e": {
+    "ehrsystem-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +103,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ehr-presentation:serve"
+            "devServerTarget": "ehrsystem:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ehr-presentation:serve:production"
+              "devServerTarget": "ehrsystem:serve:production"
             }
           }
         },
@@ -123,5 +123,5 @@
       }
     }
   },
-  "defaultProject": "ehr-presentation"
+  "defaultProject": "ehrsystem"
 }
