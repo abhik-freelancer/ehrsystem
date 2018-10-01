@@ -6,27 +6,82 @@ class Dashboard extends CI_Controller {
         parent::__construct();
         $this->load->model("User_model", "user", TRUE);
         $this->load->model("Authorization_model", "authorisation", TRUE);
+        $this->load->model("Menu_model", "menu", TRUE);
     }
     
     public function index()
     {
         CUSTOMHEADER::getCustomHeader();
-        $token_test="Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MzgxNDAyNjIsImp0aSI6IjlVU2t5SGpCUHJPMkhIcEhPbVd3ZVJjTUJiMEQ5bUk1IiwiaXNzIjoiMTkyLjE2OC4yLjE2OjgwODgiLCJuYmYiOjE1MzgxNDAyNzIsImV4cCI6bnVsbCwiZGF0YSI6eyJ1c2VyX2lkIjoiMSIsInVzZXJfbmFtZSI6ImFkbWluIiwidXNlcl9yb2xlX25hbWUiOiJBRE1JTiJ9fQ.MStfbgon6tSeZ_QcLIjo1uenVDcd6NxT10tiJlS67X2Xdfr9uUTIOuhHvmGSAcWapP_zF5CU4aD1f-V126AW7g";
+        $json_response = [];
         $headers = $this->input->request_headers();
-       //$headers = apache_request_headers();
-       //$token_string = $headers['Authorization'];
-       
-      $token_string=explode(" ", $token_test);
-       
-       //$jwt_token_filter = explode(" ", $token_test);
-       // echo "Auth  :: ". $headers['Authorization'] ;
-        //$jwt_return_token = $headers['Authorization'];
-        //$requestApiKey = CUSTOMHEADER::getHeaderX_API_Token();
-        $secreat_key = $this->config->item('enc_secrete_key');
-        $token = JWT::decode($token_string[1], $secreat_key, array('HS512'));
-	echo('<pre>');
-        print_r($token);
-        echo('</pre>');
-        exit();
+        //print_r($headers);
+        
+        $client_token = (CUSTOMHEADER::getAuthotoken($headers)!=""?CUSTOMHEADER::getAuthotoken($headers):"");
+        if($client_token!=""){
+            $server_token = $this->authorisation->getToken($client_token->jti);
+        }
+        
+
+        if($client_token!=""){
+        if($client_token->jti==$server_token ){
+            $json_response = [
+                                  "msg_status"=>HTTP_SUCCESS,
+                                  "msg_data"=>"Authentication ok.",
+                                  
+            ];
+        }else{
+            $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+        }
+        }else{
+             $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+        }
+        header('Content-Type: application/json');
+	echo json_encode( $json_response );
+	exit;
     }
+    
+    public function getMenu(){
+        CUSTOMHEADER::getCustomHeader();
+        $json_response = [];
+        $headers = $this->input->request_headers();
+        $role= $this->input->get('role_code');
+        $client_token = (CUSTOMHEADER::getAuthotoken($headers)!=""?CUSTOMHEADER::getAuthotoken($headers):"");
+        if($client_token!=""){
+            $server_token = $this->authorisation->getToken($client_token->jti);
+        }
+        
+
+        if($client_token!=""){
+        if($client_token->jti==$server_token ){
+            
+            $menu = $this->menu->getMenuByRole($role);
+             $json_response = [
+                                  "msg_status"=>HTTP_SUCCESS,
+                                  "msg_data"=>"Authentication ok.",
+                                  "left_menu"=>$menu
+                                  
+            ];
+        }else{
+            $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+        }
+        }else{
+             $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+        }
+        header('Content-Type: application/json');
+	echo json_encode( $json_response );
+	exit;
+    }
+    
 }

@@ -29,13 +29,16 @@ class Login  extends CI_Controller{
             $token_JWT=  $this->jwtAction($token->web_token,$user);
             
             $json_response = array(
-                    "msg_status" => 1,
+                                    "msg_status" => HTTP_LOGIN,
 				    "msg_data" => "success",
-                                    "token"=>$token_JWT
+                                    "token"=>$token_JWT,
+                                    "user_name"=>$user->user_name,
+                                    "user_role"=>$user->user_role_name,
+                                    "user_role_code"=>$user->user_role_code
 				);
         }else{
         $json_response = array(
-                                    "msg_status" => 0,
+                                    "msg_status" => HTTP_AUTH_FAIL,
 				    "msg_data" => "Invalid username or password",
 				);
         }
@@ -62,7 +65,8 @@ class Login  extends CI_Controller{
         'data' => [                  // Data related to the signer user
             'user_id'   => $user->user_id, // userid from the users table
             'user_name' => $user->user_name,
-            'user_role_name'=>$user->user_role_name
+            'user_role_name'=>$user->user_role_name,
+            'user_role_code'=>$user->user_role_code
             ]
         ];
         $secreat_key = $this->config->item('enc_secrete_key');
