@@ -9,7 +9,9 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
-            { path: 'forms', loadChildren: './form/form.module#FormModule' }
+            { path: 'forms', loadChildren: './form/form.module#FormModule' },
+            { path: 'reg', loadChildren: './patientreg/patientreg.module#PatientregModule' }
+        
             
         ]
     }

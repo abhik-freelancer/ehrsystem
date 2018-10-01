@@ -16,8 +16,8 @@
       [opened]="!(isHandset$ | async)">
       <mat-toolbar color="primary">Menu</mat-toolbar>
       <mat-nav-list>
-        <a mat-list-item routerLink='/dashboard'>thumb_down Link 1</a>
-        <a mat-list-item routerLink="/forms">notification_important Link 2</a>
+        <a mat-list-item routerLink='/panel/dashboard'><mat-icon>thumb_down</mat-icon> Link 1</a>
+        <a mat-list-item routerLink="/panel/forms"><mat-icon>notification_important</mat-icon> Link 2</a>
         
       </mat-nav-list>
     </mat-sidenav>
@@ -32,7 +32,31 @@
           *ngIf="isHandset$ | async">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
-        <span>ehrsystem</span>
+        
+
+        <span class="fill-remaining-space">
+           
+          <mat-menu #menu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item>
+              <mat-icon>home</mat-icon>
+              <span>Home</span>
+            </button>
+           
+           
+            <button mat-menu-item>
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </span>
+        <span class="fill-remaining-space">Application Title</span>
+      
+         <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+
+
       </mat-toolbar>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
@@ -53,14 +77,8 @@
                             <mat-icon>home</mat-icon>
                             <span>Home</span>
                           </button>
-                          <button mat-menu-item>
-                            <mat-icon>people_outline</mat-icon>
-                            <span>Connecting</span>
-                          </button>
-                          <button mat-menu-item>
-                            <mat-icon>videocam</mat-icon>
-                            <span>Let's talk</span>
-                          </button>
+                         
+                         
                           <button mat-menu-item>
                             <mat-icon>exit_to_app</mat-icon>
                             <span>Logout</span>

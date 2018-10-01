@@ -2,11 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatInputModule } from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatToolbarModule, MatSidenavModule, MatListModule ,MatMenuModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatListModule ,MatMenuModule , MatNativeDateModule } from '@angular/material';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCardModule} from '@angular/material/card';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
 
 @NgModule({
   imports: [
@@ -19,7 +26,14 @@ import { MatToolbarModule, MatSidenavModule, MatListModule ,MatMenuModule } from
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatExpansionModule,
+    MatCardModule,
+    MatAutocompleteModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: [],
   
@@ -32,7 +46,14 @@ import { MatToolbarModule, MatSidenavModule, MatListModule ,MatMenuModule } from
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatExpansionModule,
+    MatCardModule,
+    MatAutocompleteModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class AppMaterialModule { }
