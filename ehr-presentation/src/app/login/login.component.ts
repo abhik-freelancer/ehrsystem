@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
-import { DashboardComponent } from '../dashboard/dashboard.component';
+
+
 
 
 @Component({
@@ -35,7 +36,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit(formVal) {
     
+    this.router.navigate(['/dashboard']);
 
+    /*
     if(this.isLoginFormValid(formVal)){
     this.loginButtonActive = false;
     this.loaderActive = true;
@@ -59,7 +62,7 @@ export class LoginComponent implements OnInit {
      });
     }
 
-
+*/
 
 
   }

@@ -1,0 +1,80 @@
+<!--<app-header></app-header>
+<app-sidebar (collapsedEvent)="receiveCollapsed($event)"></app-sidebar>
+<section class="main-container" [ngClass]="{collapsed: collapedSideBar}">
+    <router-outlet></router-outlet>
+</section>-->
+
+
+<mat-sidenav-container class="sidenav-container" *ngIf="isAdmin">
+    
+    <mat-sidenav
+      #drawer
+      class="sidenav"
+      fixedInViewport="true"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="!(isHandset$ | async)">
+      <mat-toolbar color="primary">Menu</mat-toolbar>
+      <mat-nav-list>
+        <a mat-list-item routerLink='/dashboard'>thumb_down Link 1</a>
+        <a mat-list-item routerLink="/forms">notification_important Link 2</a>
+        
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>ehrsystem</span>
+      </mat-toolbar>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
+
+
+  <mat-sidenav-container class="sidenav-container" *ngIf="isNotAdmin">
+    
+       
+        <mat-sidenav-content>
+          <mat-toolbar color="primary">
+           
+                <span class="fill-remaining-space">
+           
+                        <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                          <button mat-menu-item>
+                            <mat-icon>home</mat-icon>
+                            <span>Home</span>
+                          </button>
+                          <button mat-menu-item>
+                            <mat-icon>people_outline</mat-icon>
+                            <span>Connecting</span>
+                          </button>
+                          <button mat-menu-item>
+                            <mat-icon>videocam</mat-icon>
+                            <span>Let's talk</span>
+                          </button>
+                          <button mat-menu-item>
+                            <mat-icon>exit_to_app</mat-icon>
+                            <span>Logout</span>
+                          </button>
+                        </mat-menu>
+                      </span>
+                      <span class="fill-remaining-space">Application Title</span>
+                    
+                       <button mat-icon-button [matMenuTriggerFor]="menu">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+
+          </mat-toolbar>
+          <router-outlet></router-outlet>
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+    
