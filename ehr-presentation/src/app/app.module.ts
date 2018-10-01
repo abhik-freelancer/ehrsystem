@@ -14,10 +14,23 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { TokeninterceptorService } from './service/tokeninterceptor.service';
 import { GlobalconstantService } from './service/globalconstant.service';
 import { AuthService } from './service/auth.service';
+
+
+
+import { Router } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
+
+import {MatCardModule} from '@angular/material/card';
+import { AppheaderComponent } from './layouts/appheader/appheader.component';
+import { AppsidebarComponent } from './layouts/appsidebar/appsidebar.component';
 
 
 
@@ -27,7 +40,13 @@ import { AuthService } from './service/auth.service';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    AppheaderComponent,
+    AppsidebarComponent
+    
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -39,9 +58,12 @@ import { AuthService } from './service/auth.service';
     MatIconModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule,
+    AppRoutingModule
+    
   ],
-  providers: [GlobalconstantService,AuthService,
+  providers: [GlobalconstantService,AuthService,ErrorHandler,
       {
       provide: HTTP_INTERCEPTORS,
       useClass: TokeninterceptorService,
@@ -50,4 +72,8 @@ import { AuthService } from './service/auth.service';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+  constructor(router: Router) {}
+
+}

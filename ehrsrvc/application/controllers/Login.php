@@ -24,7 +24,10 @@ class Login  extends CI_Controller{
         $user_name = (isset($request->username)!=""? $request->username : "") ; //$this->input->post('username');
         $pass_word = (isset($request->password)!=""? $request->password : "");//$this->input->post('password');
 		
-	
+		 $headers = apache_request_headers();
+		 print_r($headers);
+		echo  $headers['Authorization'] ;
+		
 		
 	//	echo "User" .$request->username;
 		

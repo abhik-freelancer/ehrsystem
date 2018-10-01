@@ -11,9 +11,9 @@ export class AuthService {
 
   signInVerification(formData){
 
-    let myData = JSON.stringify({data: formData});
+    let loginData = JSON.stringify({formData});
     return new Promise(resolve => {
-       this.http.post(this.global.signin,myData).subscribe(data => {
+       this.http.post(this.global.signin,formData).subscribe(data => {
          resolve(data);
         
        }, err => {
