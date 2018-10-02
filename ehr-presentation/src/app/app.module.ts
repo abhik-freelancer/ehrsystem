@@ -27,7 +27,7 @@ import { MatToolbarModule, MatSidenavModule, MatListModule ,MatMenuModule } from
 import { AppMaterialModule } from './app-material/app-material.module';
 
 
-
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 
 
@@ -54,7 +54,8 @@ import { AppMaterialModule } from './app-material/app-material.module';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    FlexLayoutModule
     
    
     
