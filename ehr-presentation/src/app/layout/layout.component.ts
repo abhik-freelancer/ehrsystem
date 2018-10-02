@@ -12,8 +12,8 @@ export class LayoutComponent implements OnInit {
     
     collapedSideBar: boolean;
 
-    isNotAdmin:boolean = false;
-    isAdmin:boolean = true;
+    isNotAdmin:boolean = true;
+    isAdmin:boolean = false;
 
     isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(

@@ -6,19 +6,33 @@
   width: 30%;
   float: left;
 }
+#patientRegSearch{
+  margin:2% 0;
+}
 
+.halfwidthInput{
+  width:40%;
+  margin-right:15px;
+}
+.patientRegFormCls{
   
-  
-  .example-full-width {
-    width: 100%;
-  }
-  
-  .example-option-img {
-    vertical-align: middle;
-    margin-right: 8px;
-  }
-  
-  [dir='rtl'] .example-option-img {
-    margin-right: 0;
-    margin-left: 8px;
-  }
+}
+
+.crow{
+margin-top:-4%;
+}
+.cfinput{
+margin-right:5px; 
+}
+.mat-card-content, .mat-card-header .mat-card-title, .mat-card-subtitle {
+  font-size: 13px;
+}
+mat-card{
+  z-index: -100;
+}
+
+table {
+  width: 100%;
+}
+
+
