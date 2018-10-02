@@ -13,6 +13,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatDividerModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatGridListModule
   ],
   declarations: [],
   
@@ -53,7 +55,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatDividerModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatGridListModule
   ]
 })
 export class AppMaterialModule { }

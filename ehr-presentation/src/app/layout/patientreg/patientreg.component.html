@@ -13,7 +13,7 @@
 
 
             <mat-form-field class="example-full-width" >
-              <input matInput placeholder="Search Patient ID" aria-label="employee" [matAutocomplete]="auto" [formControl]="stateCtrl">
+              <input matInput placeholder="Search Patient ID" aria-label="employee" [matAutocomplete]="auto" [formControl]="patientCtrl">
               <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let patient of filteredStates | async" [value]="patient.name">
                  <span>{{patient.name}}</span> 
