@@ -15,6 +15,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {MatTableModule} from '@angular/material/table';
     MatDatepickerModule,
     MatNativeDateModule,
     MatGridListModule,
-    MatTableModule
+    MatTableModule,
+    FlexLayoutModule
   ],
   declarations: [],
   
@@ -59,7 +61,8 @@ import {MatTableModule} from '@angular/material/table';
     MatDatepickerModule,
     MatNativeDateModule,
     MatGridListModule,
-    MatTableModule
+    MatTableModule,
+    FlexLayoutModule
   ]
 })
 export class AppMaterialModule { }

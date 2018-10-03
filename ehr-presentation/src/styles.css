@@ -3,3 +3,26 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', sans-serif; }
+
+
+.themecolor{
+    background: #489f0b;
+}
+.customtoolbar{
+height: 45px !important;
+font-size: 0.9rem;
+letter-spacing: 1px;
+background: #e2efd5;
+border: 1px dashed #458412;
+border-radius: 5px;
+color: #366b05;
+}
+.pageheadingtext{
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #2b780e;
+    text-transform: uppercase;
+}
+
+

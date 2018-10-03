@@ -17,16 +17,9 @@ export interface PeriodicElement {
   symbol: string;
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+  {position: 1, name: 'Mithilesh Routh', weight: 1236547891, symbol: 'Permanent'},
+  {position: 2, name: 'Aayush Kumar', weight: 3214587965, symbol: 'Dependent'},
+  
 ];
 
 
@@ -41,7 +34,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class PatientregComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
-  
+  isCheked = false;
+  enableAdvancesearch = false;
   date = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
   patientCtrl = new FormControl();
@@ -50,24 +44,24 @@ export class PatientregComponent implements OnInit {
   patients: Patient[] = [
     {
       name: 'Mithilesh Routh',
-      emplcode: '0001',
+      emplcode: 'E0001',
      
     
     },
     {
       name: 'Abhik Ghosh',
-      emplcode: '0002',
+      emplcode: 'E0001/SO',
     
     },
     {
       name: 'Shibu Sankar',
-      emplcode: '0003',
+      emplcode: 'E0002',
      
     
     },
     {
       name: 'Suman Mukherjee ',
-      emplcode: '0004',
+      emplcode: 'E0003',
      
     }
   ];
@@ -89,7 +83,21 @@ export class PatientregComponent implements OnInit {
   }
 
  
+ 
+  enableAdvanceSearch(event) {
 
+    this.isCheked = !this.isCheked;
+
+    if(this.isCheked==true){
+      this.enableAdvancesearch = true;
+    }
+    else{
+      this.enableAdvancesearch = false;
+    }
+
+  
+
+}
 
 
 

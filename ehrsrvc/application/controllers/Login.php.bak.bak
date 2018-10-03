@@ -23,7 +23,20 @@ class Login  extends CI_Controller{
 		
         $user_name = (isset($request->username)!=""? $request->username : "") ; //$this->input->post('username');
         $pass_word = (isset($request->password)!=""? $request->password : "");//$this->input->post('password');
+<<<<<<< HEAD
+		
+		 $headers = apache_request_headers();
+		 print_r($headers);
+		echo  $headers['Authorization'] ;
+		
+		
+	//	echo "User" .$request->username;
+		
+		
+        $user = $this->user->getUserByUsernamePwd($user_name,$pass_word);
+=======
 	$user = $this->user->getUserByUsernamePwd($user_name,$pass_word);
+>>>>>>> dbaf9f3e27d68b8edcb24b74f943c853871fa13a
         if($user!=NULL){
             $token = $this->authorisation->getTokenId();
             $token_JWT=  $this->jwtAction($token->web_token,$user);

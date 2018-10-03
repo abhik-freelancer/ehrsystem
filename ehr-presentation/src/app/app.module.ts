@@ -27,16 +27,6 @@ import { MatToolbarModule, MatSidenavModule, MatListModule ,MatMenuModule } from
 import { AppMaterialModule } from './app-material/app-material.module';
 
 
-import { FlexLayoutModule } from "@angular/flex-layout";
-
-
-
-
-
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -54,11 +44,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatMenuModule,
-    FlexLayoutModule
-    
-   
-    
+    MatMenuModule
   ],
   providers: [GlobalconstantService,AuthService,ErrorHandler,
       {

@@ -7,92 +7,109 @@
 
 <mat-sidenav-container class="sidenav-container" *ngIf="isAdmin">
     
-    <mat-sidenav
-      #drawer
-      class="sidenav"
-      fixedInViewport="true"
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="!(isHandset$ | async)">
-      <mat-toolbar color="primary">Menu</mat-toolbar>
-      <mat-nav-list>
-        <a mat-list-item routerLink='/panel/dashboard'><mat-icon>thumb_down</mat-icon> Link 1</a>
-        <a mat-list-item routerLink="/panel/forms"><mat-icon>notification_important</mat-icon> Link 2</a>
-        
-      </mat-nav-list>
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-      <mat-toolbar color="primary">
-        <button
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
-          (click)="drawer.toggle()"
-          *ngIf="isHandset$ | async">
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-        </button>
-        
-
-        <span class="fill-remaining-space">
-           
-          <mat-menu #menu="matMenu" [overlapTrigger]="false">
-            <button mat-menu-item>
-              <mat-icon>home</mat-icon>
-              <span>Home</span>
-            </button>
-           
-           
-            <button mat-menu-item>
-              <mat-icon>exit_to_app</mat-icon>
-              <span>Logout</span>
-            </button>
-          </mat-menu>
-        </span>
-        <span class="fill-remaining-space">Application Title</span>
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink='/panel/dashboard'><mat-icon>dashboard</mat-icon> Dashboard</a>
+      <a mat-list-item routerLink="/panel/forms"><mat-icon>queue</mat-icon> Registration</a>
+      <a mat-list-item routerLink="/panel/forms"><mat-icon>playlist_add_check</mat-icon> Todays List</a>
+      <a mat-list-item routerLink="/panel/forms"><mat-icon>new_releases</mat-icon> Medicine</a>
+      <a mat-list-item routerLink="/panel/forms"><mat-icon>link</mat-icon> Import Medicine</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/panel/forms"><mat-icon>notification_important</mat-icon> Doctors Visit</a>
+      <a mat-list-item routerLink="/panel/forms"><mat-icon>memory</mat-icon> Todays Report</a>
+      <a mat-list-item routerLink="/panel/forms"><mat-icon>compare</mat-icon> Stock Report</a>
+      <a mat-list-item routerLink="/panel/forms"><mat-icon>notification_important</mat-icon> Other Report</a>
+      <a mat-list-item routerLink="/panel/forms"><mat-icon>domain</mat-icon> Help</a>
       
-         <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      
+
+      <span class="fill-remaining-space">
+         
+        <mat-menu #menu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item>
+            <mat-icon>home</mat-icon>
+            <span>Home</span>
           </button>
+         
+         
+          <button mat-menu-item>
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </span>
+      <span class="fill-remaining-space">Application Title</span>
+    
+       <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>dashboard</mat-icon>
+        </button>
 
 
 
-      </mat-toolbar>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+<mat-sidenav-container class="sidenav-container" *ngIf="isNotAdmin">
   
-
-
-  <mat-sidenav-container class="sidenav-container" *ngIf="isNotAdmin">
-    
-       
-        <mat-sidenav-content>
-          <mat-toolbar color="primary">
+     
+      <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            
+        
            
-                <span class="fill-remaining-space">
-           
-                        <mat-menu #menu="matMenu" [overlapTrigger]="false">
-                          <button mat-menu-item>
-                            <mat-icon>home</mat-icon>
-                            <span>Home</span>
-                          </button>
-                         
-                         
-                          <button mat-menu-item>
-                            <mat-icon>exit_to_app</mat-icon>
-                            <span>Logout</span>
-                          </button>
-                        </mat-menu>
-                      </span>
-                      <span class="fill-remaining-space">Application Title</span>
-                    
-                       <button mat-icon-button [matMenuTriggerFor]="menu">
-                          <mat-icon>more_vert</mat-icon>
+          
+         
+            
+        
+          
+              <p >Welcome Suman</p>
+              <span class="fill-remaining-space">
+         
+                      <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                        <button mat-menu-item>
+                          <mat-icon>home</mat-icon>
+                          <span>Home</span>
                         </button>
+                       
+                       
+                        <button mat-menu-item>
+                          <mat-icon>exit_to_app</mat-icon>
+                          <span>Logout</span>
+                        </button>
+                      </mat-menu>
+                    </span>
+                    <span class="fill-remaining-space">EHR Solutions</span>
+                  
+                     <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
 
-          </mat-toolbar>
-          <router-outlet></router-outlet>
-        </mat-sidenav-content>
-      </mat-sidenav-container>
-    
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  
