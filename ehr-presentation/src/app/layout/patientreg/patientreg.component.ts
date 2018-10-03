@@ -3,6 +3,9 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import { PatientService } from '../../service/patient.service';
+
+
 
 export interface Patient {
  
@@ -41,6 +44,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class PatientregComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
+  private  patientlst:  Array<object> = [];
   
   date = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
@@ -72,15 +76,16 @@ export class PatientregComponent implements OnInit {
     }
   ];
 
-  constructor() {
+  constructor(private patientService:PatientService) {
+    
     this.filteredStates = this.patientCtrl.valueChanges
       .pipe(
         startWith(''),
         map(patient => patient ? this._filterStates(patient) : this.patients.slice())
       );
-
-     
    }
+   patientLst: string[];
+   selected = null;
 
    private _filterStates(value: string): Patient[] {
     const filterValue = value.toLowerCase();
@@ -88,15 +93,15 @@ export class PatientregComponent implements OnInit {
     return this.patients.filter(patient => patient.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
- 
-
-
-
-
   ngOnInit() {
-    
+    this.getContacts();
   }
-
+  public  getContacts(){
+    this.patientService.GetPatientListAll().subscribe((data:  Array<object>) => {
+        this.patientlst  =  data;
+        console.log(data);
+    });
+}
   
 }
 

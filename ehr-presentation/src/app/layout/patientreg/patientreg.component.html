@@ -20,29 +20,17 @@
                     <input matInput placeholder="Search Patient ID" aria-label="employee" [matAutocomplete]="auto"
                         [formControl]="patientCtrl">
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let patient of filteredStates | async" [value]="patient.name">
-                            <span>{{patient.name}}</span>
+                        <mat-option *ngFor="let patient of patientLst | async" [value]="patient.patient_id">
+                            <span>{{patient.employee_id}}</span>
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
 
-<<<<<<< HEAD
-            <mat-form-field class="example-full-width" >
-              <input matInput placeholder="Search Patient ID" aria-label="employee" [matAutocomplete]="auto" [formControl]="patientCtrl">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let patient of filteredStates | async" [value]="patient.name">
-                 <span>{{patient.name}}</span> 
-                  
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-=======
                 <mat-form-field  class="halfwidthInput">
                         <input matInput [matDatepicker]="picker1" placeholder="Registration Date" [formControl]="date">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
->>>>>>> e9be27af373ed0c1717bdf8338f31a3ae5edee66
 
                 <mat-checkbox>Enable Advance Search</mat-checkbox>
 
