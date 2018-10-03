@@ -31,10 +31,8 @@ class Login  extends CI_Controller{
             $json_response = array(
                                     "msg_status" => HTTP_LOGIN,
 				    "msg_data" => "success",
-                                    "token"=>$token_JWT,
-                                    "user_name"=>$user->user_name,
-                                    "user_role"=>$user->user_role_name,
-                                    "user_role_code"=>$user->user_role_code
+                                    "token"=>$token_JWT
+                                   
 				);
         }else{
         $json_response = array(
