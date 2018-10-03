@@ -36,17 +36,17 @@ class Patient extends CI_Controller{
             ];
         }
         }else{
-//             $json_response = [
-//                                "msg_status"=>HTTP_AUTH_FAIL,
-//                                "msg_data"=>"Authentication fail."
-//            ];
-            $patient = $this->patient->getPatientList();
              $json_response = [
-                                  "msg_status"=>HTTP_SUCCESS,
-                                  "msg_data"=>"Authentication ok.",
-                                  "patient"=>$patient
-                                  
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
             ];
+//            $patient = $this->patient->getPatientList();
+//             $json_response = [
+//                                  "msg_status"=>HTTP_SUCCESS,
+//                                  "msg_data"=>"Authentication ok.",
+//                                  "patient"=>$patient
+//                                  
+//            ];
         }
         header('Content-Type: application/json');
 	echo json_encode( $json_response );
