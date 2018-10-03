@@ -15,10 +15,18 @@ class Patient extends CI_Controller{
         CUSTOMHEADER::getCustomHeader();
         $json_response = [];
         $headers = $this->input->request_headers();
-        $client_token = (CUSTOMHEADER::getAuthotoken($headers)!=""?CUSTOMHEADER::getAuthotoken($headers):"");
+        
+        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+        
+        //var_dump($client_token);
+        $server_token="";
         if($client_token!=""){
-            $server_token = $this->authorisation->getToken($client_token->jti);
+            $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+           
         }
+//        echo("client:".$client_token);
+//        echo("serve:".$server_token);
+//        
         if($client_token!=""){
         if($client_token->jti==$server_token ){
             
