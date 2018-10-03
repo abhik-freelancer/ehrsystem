@@ -37,8 +37,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class PatientregComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
+
+  isCheked = false;
+  enableAdvancesearch = false;
+
   private  patientlst:  Array<object> = [];
   
+
   date = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
   patientCtrl = new FormControl();
@@ -85,6 +90,26 @@ export class PatientregComponent implements OnInit {
 
     return this.patients.filter(patient => patient.name.toLowerCase().indexOf(filterValue) === 0);
   }
+
+
+ 
+  enableAdvanceSearch(event) {
+
+    this.isCheked = !this.isCheked;
+
+    if(this.isCheked==true){
+      this.enableAdvancesearch = true;
+    }
+    else{
+      this.enableAdvancesearch = false;
+    }
+
+  
+
+}
+
+
+
 
   ngOnInit() {
     this.getContacts();
