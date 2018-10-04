@@ -21,5 +21,51 @@ class Patient_model extends CI_Model{
         return $patient_data;
     }
     
+	
+	/**
+     * @name registerPatient
+     * @author Mithilesh Routh
+     * @return $patient_data
+     * @desc register patient datas
+     */
+	 
+    public function registerPatient($request)
+    {
+       		try {
+		
+            $this->db->trans_begin();
+			$reg_data = [];
+				$hospital_id = $request->hospital_id;
+				$regdata = $request->values;
+				
+				$formatedate = new DateTime($regdata->regdate);
+				$reg_date =  $formatedate->format('Y-m-d H:i:s'); 
+				
+				
+				$patient_id = $regdata->hdnPatientID;
+				
+				$reg_data = [
+					"hospital_id" => (trim(htmlspecialchars($hospital_id))),
+					"date_of_registration" => trim(htmlspecialchars($reg_date)),
+					"patient_id" => (trim(htmlspecialchars($patient_id))),
+					"served_flag" => "N"
+				];
+			
+			
+		//	$this->db->insert('registration', $reg_data);
+			
+			if($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+				return false;
+            } else {
+				$this->db->trans_commit();
+                return true;
+            }
+        } 
+		catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+	
     
 }

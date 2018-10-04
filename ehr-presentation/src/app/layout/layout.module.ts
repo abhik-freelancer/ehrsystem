@@ -8,6 +8,8 @@ import { LayoutComponent } from './layout.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AppMaterialModule } from '../app-material/app-material.module';
+import { OkdialogComponent } from './components/dialog/okdialog/okdialog.component';
+
 
 
 @NgModule({
@@ -18,6 +20,6 @@ import { AppMaterialModule } from '../app-material/app-material.module';
         FormsModule,
         ReactiveFormsModule
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, OkdialogComponent]
 })
 export class LayoutModule {}

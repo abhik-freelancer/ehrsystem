@@ -36,13 +36,11 @@ export class PatientsCls {
 }
 
 @Component({
-  selector: 'app-patientreg',
-  templateUrl: './patientreg.component.html',
-  styleUrls: ['./patientreg.component.css']
+  selector: 'app-patienregistration',
+  templateUrl: './patienregistration.component.html',
+  styleUrls: ['./patienregistration.component.css']
 })
-
-
-export class PatientregComponent implements OnInit {
+export class PatienregistrationComponent implements OnInit {
 
   patientRegForm: FormGroup;
   registerButtonActive:boolean = true;
@@ -247,10 +245,4 @@ export class PatientregComponent implements OnInit {
   }
 
 
-
-  
 }
-
-
-
-

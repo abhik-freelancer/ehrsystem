@@ -28,9 +28,11 @@ import { AppMaterialModule } from './app-material/app-material.module';
 
 
 
+
 @NgModule({
   declarations: [
-    AppComponent  
+    AppComponent 
+     
   ],
   imports: [
     BrowserModule,

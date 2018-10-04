@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 
+
 const routes: Routes = [
     {
         path: '',
@@ -11,6 +12,7 @@ const routes: Routes = [
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
             { path: 'forms', loadChildren: './form/form.module#FormModule' },
             { path: 'reg', loadChildren: './patientreg/patientreg.module#PatientregModule' },
+            { path: 'registration', loadChildren: './patienregistration/patienregistration.module#PatienregistrationModule' },
             {path:'todaysreg',loadChildren:'./todaysregistration/todaysregistration.module#TodaysregistrationModule'}
         
             

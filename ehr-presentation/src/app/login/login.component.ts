@@ -36,9 +36,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit(formVal) {
     
-    this.router.navigate(['/panel/dashboard']);
+    
 
-    /*
+  
     if(this.isLoginFormValid(formVal)){
     this.loginButtonActive = false;
     this.loaderActive = true;
@@ -47,7 +47,25 @@ export class LoginComponent implements OnInit {
      
     response = data;
     if(response.msg_status==100){
-      this.router.navigate(['/dashboard']);
+      localStorage.setItem("token", response.token);
+      if(response.user_role_code=="ADMIN"){
+        this.router.navigate(['/panel/dashboard']);
+      }
+      else if(response.user_role_code=="DOC"){
+        this.router.navigate(['/panel/dashboard']);
+      }
+      else if(response.user_role_code=="ASST"){
+        this.router.navigate(['/panel/reg']);
+      }
+      else if(response.user_role_code=="PHRM"){
+        this.router.navigate(['/panel/dashboard']);
+      }
+      else{
+        this.router.navigate(['/not-found']);
+      }
+      
+      
+
      }
      else{
       this.invalidErr = true;
@@ -62,7 +80,7 @@ export class LoginComponent implements OnInit {
      });
     }
 
-*/
+
 
 
   }

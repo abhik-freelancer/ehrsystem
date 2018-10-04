@@ -27,7 +27,7 @@ export class TokeninterceptorService {
   private async handleAccess(request: HttpRequest<any>, next: HttpHandler):
   Promise<HttpEvent<any>> {
      // const token = await this.global.getToken();
-      const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MzgxNDAyNjIsImp0aSI6IjlVU2t5SGpCUHJPMkhIcEhPbVd3ZVJjTUJiMEQ5bUk1IiwiaXNzIjoiMTkyLjE2OC4yLjE2OjgwODgiLCJuYmYiOjE1MzgxNDAyNzIsImV4cCI6bnVsbCwiZGF0YSI6eyJ1c2VyX2lkIjoiMSIsInVzZXJfbmFtZSI6ImFkbWluIiwidXNlcl9yb2xlX25hbWUiOiJBRE1JTiJ9fQ.MStfbgon6tSeZ_QcLIjo1uenVDcd6NxT10tiJlS67X2Xdfr9uUTIOuhHvmGSAcWapP_zF5CU4aD1f-V126AW7g";
+      const token = this.global.getToken();
       const apikey = await this.global.getAPiKey();
       let changedRequest = request;
       // HttpHeader object immutable - copy values

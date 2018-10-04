@@ -16,6 +16,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatNativeDateModule,
     MatGridListModule,
     MatTableModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatDialogModule
   ],
   declarations: [],
   
@@ -62,7 +64,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatNativeDateModule,
     MatGridListModule,
     MatTableModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatDialogModule
   ]
 })
 export class AppMaterialModule { }

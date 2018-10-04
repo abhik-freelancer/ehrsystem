@@ -10,22 +10,24 @@
                     </mat-card-header>
                     
                      <mat-card-content>
-                        <form class="patientRegFormCls">
+                        <form [formGroup]="patientRegForm" class="patientRegFormCls" novalidate (ngSubmit)="onSubmit(patientRegForm.value)">
                                 <mat-toolbar> Search  Patients</mat-toolbar>
                 
                             <section id="patientRegSearch">
+                               
                                <mat-form-field class="halfwidthInput">
                                     <input matInput placeholder="Search Patient ID" aria-label="employee" [matAutocomplete]="auto"
-                                        [formControl]="patientCtrl">
-                                    <mat-autocomplete #auto="matAutocomplete">
-                                        <mat-option *ngFor="let patient of filteredStates | async" [value]="patient.name">
-                                            <span>{{patient.emplcode}}</span>
+                                    formControlName="searchpatientCtrl" >
+                                    <input type="hidden" formControlName="hdnPatientID" >
+                                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="AutoCompleteDisplay">
+                                        <mat-option *ngFor="let patient of listofPatient[0] " [value]="patient.patient_code" (click)="getPatientDetail(patient)">
+                                            <span>{{patient.patient_code}}</span>
                                         </mat-option>
                                     </mat-autocomplete>
                                 </mat-form-field>
-                
+                                
                                 <mat-form-field  class="halfwidthInput">
-                                        <input matInput [matDatepicker]="picker1" placeholder="Registration Date" [formControl]="date">
+                                        <input matInput [matDatepicker]="picker1" placeholder="Registration Date"  formControlName="regdate" >
                                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                         <mat-datepicker #picker1></mat-datepicker>
                                     </mat-form-field>
@@ -35,17 +37,17 @@
                                 <p *ngIf="enableAdvancesearch">
                                     <mat-form-field appearance="outline" class="cfinput">
                                         <mat-label>Name</mat-label>
-                                        <input matInput placeholder="">
+                                        <input matInput placeholder="" formControlName="patienname">
                                     </mat-form-field>
                                   
                                     <mat-form-field appearance="outline" class="cfinput">
                                         <mat-label>Mobile No</mat-label>
-                                        <input matInput placeholder="">
+                                        <input matInput placeholder="" formControlName="patientmobileno">
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" class="cfinput">
                                             <mat-label>Patient ID</mat-label>
-                                            <input matInput placeholder="">
+                                            <input matInput placeholder="" formControlName="patientid">
                                     </mat-form-field>
                                     <button mat-mini-fab color="primary"> <mat-icon>search</mat-icon> </button>
                 
@@ -62,43 +64,43 @@
                                     <div class="margingap"></div>
                                 <div class="container crow" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
                                         <div fxFlex="33%">
-                                           <input type="text" placeholder="Name" class="customforminput"/>
+                                           <input type="text" placeholder="Name" class="customforminput" formControlName="patientName" />
                                         </div>
                                         <div fxFlex="33%">
-                                            <input type="text" placeholder="Gender" class="customforminput"/>
+                                            <input type="text" placeholder="Gender" class="customforminput"  formControlName="patientGender" />
                                         </div>
                                         <div fxFlex="33%">
-                                            <input type="text" placeholder="DOB" class="customforminput"/>
+                                            <input type="text" placeholder="DOB" class="customforminput"  formControlName="patientDOB" />
                                         </div>
                                 </div>
 
                                 <div class="container crow" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
                                     <div fxFlex="33%">
-                                       <input type="text" placeholder="Blood Group" class="customforminput"/>
+                                       <input type="text" placeholder="Blood Group" class="customforminput"  formControlName="patientBloodGrp" />
                                     </div>
                                     <div fxFlex="33%">
-                                        <input type="text" placeholder="Patient Type" class="customforminput"/>
+                                        <input type="text" placeholder="Patient Type" class="customforminput"  formControlName="patientType" />
                                     </div>
                                     <div fxFlex="33%">
-                                        <input type="text" placeholder="Relation" class="customforminput"/>
-                                    </div>
-                                </div>
-
-                                <div class="container crow" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
-                                    <div fxFlex="33%">
-                                       <input type="text" placeholder="Line Number" class="customforminput"/>
-                                    </div>
-                                    <div fxFlex="33%">
-                                        <input type="text" placeholder="Division Number" class="customforminput"/>
-                                    </div>
-                                    <div fxFlex="33%">
-                                        <input type="text" placeholder="Challan Number" class="customforminput"/>
+                                        <input type="text" placeholder="Relation" class="customforminput"  formControlName="patientRelation" />
                                     </div>
                                 </div>
 
                                 <div class="container crow" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
                                     <div fxFlex="33%">
-                                       <input type="text" placeholder="Estate" class="customforminput"/>
+                                       <input type="text" placeholder="Line Number" class="customforminput"  formControlName="patientLineNo" />
+                                    </div>
+                                    <div fxFlex="33%">
+                                        <input type="text" placeholder="Division Number" class="customforminput"  formControlName="patientDivisionNo" />
+                                    </div>
+                                    <div fxFlex="33%">
+                                        <input type="text" placeholder="Challan Number" class="customforminput"  formControlName="patientChallanNo" />
+                                    </div>
+                                </div>
+
+                                <div class="container crow" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                    <div fxFlex="33%">
+                                       <input type="text" placeholder="Estate" class="customforminput"  formControlName="patientEstate" />
                                     </div>
                                     <div fxFlex="33%">
                                        
@@ -110,7 +112,8 @@
                                 </div>
                             </section>
                             <mat-card-actions>
-                                    <button mat-raised-button color="primary" >Register</button>
+                                    <button mat-raised-button color="primary" *ngIf="registerButtonActive">Register</button>
+                                    <mat-spinner [diameter]="25" style="margin:0 auto;" *ngIf="loaderActive"></mat-spinner>
                             </mat-card-actions>
                         </form>
                 

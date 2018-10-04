@@ -7,8 +7,9 @@ export class GlobalconstantService {
 
   constructor() { }
 
-  private APIURL = "http://192.168.2.16:8088/ehrsystem/ehrsrvc/";
+  //private APIURL = "http://192.168.2.16:8088/ehrsystem/ehrsrvc/";
   //private APIURL = "http://192.168.2.10/ehrsystem/ehrsrvc/";
+  private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
   private APIKEY = "24ecdccb1258eaacfd441e012ac034392403c692";
 
   // URL INFO
@@ -16,6 +17,8 @@ export class GlobalconstantService {
 
   public signin = this.APIURL+"login/getLogin";
   public ListPatient = this.APIURL+"patient/getAllPatient";
+  public patientdetail_URL = this.APIURL+"patient/getPatientDetail";
+  public registerPatient_URL = this.APIURL+"patient/registerPatient";
 
 
   getApiURL(){
@@ -26,8 +29,8 @@ export class GlobalconstantService {
     return this.APIKEY;
   }
 
-  getToken(){
-    return "acccc";
+  public getToken(): string {
+    return localStorage.getItem("token");
   }
 
 }
