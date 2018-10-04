@@ -7,9 +7,9 @@ export class GlobalconstantService {
 
   constructor() { }
 
-  //private APIURL = "http://192.168.2.16:8088/ehrsystem/ehrsrvc/";
+  private APIURL = "http://192.168.2.16:8088/ehrsystem/ehrsrvc/";
   //private APIURL = "http://192.168.2.10/ehrsystem/ehrsrvc/";
-  private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
+ // private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
   private APIKEY = "24ecdccb1258eaacfd441e012ac034392403c692";
 
   // URL INFO

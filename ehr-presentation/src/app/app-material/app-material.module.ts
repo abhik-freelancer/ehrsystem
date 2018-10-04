@@ -17,6 +17,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatDialogModule} from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatGridListModule,
     MatTableModule,
     FlexLayoutModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule
   ],
   declarations: [],
   
@@ -65,7 +67,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatGridListModule,
     MatTableModule,
     FlexLayoutModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule
   ]
 })
 export class AppMaterialModule { }
