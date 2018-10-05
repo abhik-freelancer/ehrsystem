@@ -79,5 +79,17 @@ export class PatientService {
         });
     }
 
+    searchPatient(formValue,serachtype){
+      let hospitalid = 1; // will come from global file // need to change
+      let myData = JSON.stringify({hospital_id: hospitalid,values:formValue,stype:serachtype});
+       return new Promise(resolve => {
+          this.http.post(this.global.searchPatient_URL,myData).subscribe(data => {
+            resolve(data);
+          }, err => {
+            console.log(err);
+          });
+        });
+    }
+
    
 }

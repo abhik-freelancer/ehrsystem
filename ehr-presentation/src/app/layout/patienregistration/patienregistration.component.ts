@@ -12,6 +12,8 @@ import * as jwt_decode from "jwt-decode";
 
 
 
+
+
 export interface Patient {
  
   name: string;
@@ -43,6 +45,8 @@ export class PatientsCls {
 export class PatienregistrationComponent implements OnInit {
 
   patientRegForm: FormGroup;
+  IDsearchForm: FormGroup;
+  FieldsearchForm: FormGroup;
   registerButtonActive:boolean = true;
   loaderActive:boolean = false;
 
@@ -51,6 +55,9 @@ export class PatienregistrationComponent implements OnInit {
 
   isCheked = false;
   enableAdvancesearch = false;
+  disableInputField = false;
+
+  enableregister = false;
 
   private  patientlst:  Array<object> = [];
 
@@ -67,6 +74,15 @@ export class PatienregistrationComponent implements OnInit {
   patientChallanNo:string = "";
   patientEstate:string = "";
   
+  tblPatientID:string = "";
+  tblPatientName:string = "";
+  tblPatientDOB;
+  tblPatientGender:string = "";
+  tblPatientDivision:string = "";
+  tblPatientChallan:string = "";
+  tblPatientLine:string = "";
+  tblPatientMbl:string = "";
+  tblPatientAadhar:string = "";
 
 
 
@@ -97,6 +113,19 @@ export class PatienregistrationComponent implements OnInit {
           patientChallanNo: new FormControl(''),
           patientEstate: new FormControl('')
      });
+
+
+     this.IDsearchForm = new FormGroup({
+      patientID: new FormControl(''),
+      patientAadhar: new FormControl('')
+      });
+
+      
+     this.FieldsearchForm = new FormGroup({
+      patientNameCtrl: new FormControl(''),
+      patientDOBCtrl: new FormControl(''),
+      patientMobileCtrl: new FormControl('')
+      });
 
    }
   
@@ -153,9 +182,27 @@ export class PatienregistrationComponent implements OnInit {
 
     if(this.isCheked==true){
       this.enableAdvancesearch = true;
+      this.disableInputField = true;
+      this.IDsearchForm.controls['patientID'].disable(); 
+      this.IDsearchForm.controls['patientAadhar'].disable(); 
+      /*
+      this.IDsearchForm = new FormGroup({
+        patientID: new FormControl({value:'',disabled: true}),
+        patientAadhar: new FormControl({value:'',disabled: true})
+        });
+        */
     }
     else{
       this.enableAdvancesearch = false;
+      /*
+      this.IDsearchForm = new FormGroup({
+        patientID: new FormControl({value:'',disabled: false}),
+        patientAadhar: new FormControl({value:'',disabled: false})
+        });
+        */
+
+       this.IDsearchForm.controls['patientID'].enable(); 
+       this.IDsearchForm.controls['patientAadhar'].enable(); 
     }
 
   
@@ -221,6 +268,7 @@ export class PatienregistrationComponent implements OnInit {
     }
   }
 
+  /*
   onSubmit(){
 
     this.registerButtonActive = false;
@@ -243,6 +291,52 @@ export class PatienregistrationComponent implements OnInit {
      });
 
   }
+  */
+
+  searchPatient(){
+    let searchData;
+    let searchType;
+    if(this.enableAdvancesearch){
+       searchData = this.FieldsearchForm.value;
+      searchType = "ADV";
+    }
+    else{
+      console.log(this.IDsearchForm.value);
+      searchData = this.IDsearchForm.value;
+      searchType = "BASIC";
+    }
+   
+
+    let response;
+
+    this.patientService.searchPatient(searchData,searchType).then(data => {
+      response = data;
+      if(response.msg_status==200){
+        this.enableregister = true;
+        let pdata = response.patient;
+        console.log(pdata.mobile_two);
+        this.tblPatientID = pdata.patient_code;
+        this.tblPatientName = pdata.patient_name;
+        this.tblPatientDOB = pdata.dob;
+        this.tblPatientGender = pdata.gender;
+        this.tblPatientDivision = pdata.division_number;
+        this.tblPatientChallan = pdata.challan_number;
+        this.tblPatientLine = pdata.line_number;
+        this.tblPatientMbl = pdata.mobile_one;
+        this.tblPatientAadhar = pdata.adhar;
+      }
+      else{
+        this.enableregister = false;
+        this.registerButtonActive = true;
+        this.loaderActive = false;
+      }
+     },
+       error => {
+         console.log("There is some error on submitting...");
+     });
+  }
+
+
 
 
 }

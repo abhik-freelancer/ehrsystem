@@ -96,3 +96,37 @@
 .reg-action > button{
     margin-right: 1%;
 }
+.bttn-right{
+    float:right;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 0px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+.registraionTable{
+    width:100%;
+   /* border:1px solid #f3f3f3;*/
+}
+.table_head{
+    background: #0563bf;
+    color:#FFF;
+    font-weight:500;
+    letter-spacing: 1px;
+}
+
+.customeBtn{
+    border: 0;
+    background: #0e58c8;
+    padding: 6px 17px;
+    border-radius: 14px;
+    color: #FFF;
+}

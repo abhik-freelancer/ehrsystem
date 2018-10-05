@@ -6,6 +6,7 @@ import { AppMaterialModule } from '../../app-material/app-material.module';
 import { FormsModule ,ReactiveFormsModule } from '@angular/forms';
 import { PatienregistrationRoutingModule } from './patienregistration-routing.module';
 import { PatienregistrationComponent } from './patienregistration.component';
+import { TodayspatientreglistComponent } from '../components/todayspatientreglist/todayspatientreglist.component';
 
 
 
@@ -22,6 +23,6 @@ import { PatienregistrationComponent } from './patienregistration.component';
     ReactiveFormsModule
     
   ],
-  declarations: [PatienregistrationComponent]
+  declarations: [PatienregistrationComponent,TodayspatientreglistComponent]
 })
 export class PatienregistrationModule { }

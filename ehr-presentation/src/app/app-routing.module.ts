@@ -8,6 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 
+
 const appRoutes: Routes = [
  
   { path: 'panel', loadChildren: './layout/layout.module#LayoutModule' },
@@ -24,5 +25,6 @@ const appRoutes: Routes = [
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
   declarations: []
+  
 })
 export class AppRoutingModule { }

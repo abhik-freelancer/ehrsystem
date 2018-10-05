@@ -19,6 +19,7 @@ export class GlobalconstantService {
   public ListPatient = this.APIURL+"patient/getAllPatient";
   public patientdetail_URL = this.APIURL+"patient/getPatientDetail";
   public registerPatient_URL = this.APIURL+"patient/registerPatient";
+  public searchPatient_URL = this.APIURL+"patient/searchPatient";
 
 
   getApiURL(){

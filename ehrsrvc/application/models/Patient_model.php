@@ -67,5 +67,44 @@ class Patient_model extends CI_Model{
         }
     }
 	
+	public function searchPatient($request){
+		$patient_data="";
+		$searchType = $request->stype;
+		$formValue = $request->values;
+		if($searchType=="BASIC"){
+			
+			$patientID = $formValue->patientID;
+			$patientAadhar = $formValue->patientAadhar;
+			
+			 $query = $this->db->select("patients.*,patient_type.*")
+                         ->from("patients") 
+                         ->join("patient_type","patients.patient_type_id = patient_type.patient_type_id","LEFT")
+						 ->where("(patients.patient_code = '$patientID' OR patients.adhar = '$patientAadhar')")
+                         ->get();
+		}
+		else if($searchType=="ADV"){
+			$patientName = $formValue->patientNameCtrl;
+			$patientDOB = $formValue->patientDOBCtrl;
+			$patientMobile = $formValue->patientMobileCtrl;
+			
+			$where = [
+				"patients.patient_name" => $patientName,
+				"patients.dob" => $patientDOB,
+				"patients.mobile_one" => $patientMobile
+			];
+			
+			 $query = $this->db->select("patients.*,patient_type.*")
+                         ->from("patients") 
+                         ->join("patient_type","patients.patient_type_id = patient_type.patient_type_id","LEFT")
+						 ->where($where)
+                         ->get();
+		}
+		//echo $this->db->last_query();
+		if($query->num_rows()>0){
+				$patient_data = $query->row();
+            }
+        return $patient_data;
+	}
+	
     
 }

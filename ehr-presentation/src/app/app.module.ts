@@ -29,9 +29,12 @@ import { AppMaterialModule } from './app-material/app-material.module';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent 
+    
+    
      
   ],
   imports: [
@@ -56,6 +59,7 @@ import { AppMaterialModule } from './app-material/app-material.module';
       }
       
   ],
+ 
   bootstrap: [AppComponent]
 })
 export class AppModule { 
