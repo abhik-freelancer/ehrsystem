@@ -169,6 +169,12 @@ ngOnInit() {
 
 }
 
+
+ngOnDestroy() {
+  this._onDestroy.next();
+  this._onDestroy.complete();
+}
+
 private filterPatientCode() {
   if (!this.patientcode) {
     return;
