@@ -47,22 +47,28 @@ export class LoginComponent implements OnInit {
      
     response = data;
     if(response.msg_status==100){
+      const user_data = response.userdata;
       localStorage.setItem("token", response.token);
-      if(response.user_role_code=="ADMIN"){
+      localStorage.setItem("fname", user_data.first_name);
+      localStorage.setItem("lname", user_data.last_name);
+     // this.router.navigate(['/panel/registration']);
+      console.log(user_data.user_role_code);
+      if(user_data.user_role_code=="ADMIN"){
         this.router.navigate(['/panel/dashboard']);
       }
-      else if(response.user_role_code=="DOC"){
-        this.router.navigate(['/panel/dashboard']);
+      else if(user_data.user_role_code=="DOC"){
+        this.router.navigate(['/panel/todaysreg']);
       }
-      else if(response.user_role_code=="ASST"){
-        this.router.navigate(['/panel/reg']);
+      else if(user_data.user_role_code=="ASST"){
+        this.router.navigate(['/panel/registration']);
       }
-      else if(response.user_role_code=="PHRM"){
+      else if(user_data.user_role_code=="PHRM"){
         this.router.navigate(['/panel/dashboard']);
       }
       else{
         this.router.navigate(['/not-found']);
       }
+      
       
       
 

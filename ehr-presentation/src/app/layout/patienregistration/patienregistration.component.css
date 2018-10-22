@@ -23,10 +23,16 @@
   .cfinput{
   margin-right:5px; 
   }
-  .mat-card-content, .mat-card-header .mat-card-title, .mat-card-subtitle {
+  .mat-card-content, .mat-card-header  {
     font-size: 13px;
   }
+  .mat-card-title, .mat-card-subtitle {
+    font-size: 1.5rem;
+  }
   
+  .fullwidthinp{
+    width:100%;
+  }
   
   table {
     width: 100%;
@@ -45,12 +51,25 @@
   .mat-card-actions{
     text-align:center;
   }
-  
+  .reggrid_block{
+    padding: 4px 1%;
+    background: transparent;
+  }
   .biometric_img{
     width: 30%;
     margin-left: auto;
     margin-right: auto;
     display: block;
+  }
+
+    
+  .reg_big_icon {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    font-size: 5.5rem;
+    color:#FFF;
+    margin-top: 14%;
   }
 
   .center-obj{
@@ -64,9 +83,10 @@
   }
   .card_title{
     font-weight: 400;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     font-family: Roboto;
-    font-size: 15px;
+    font-size: 1.2rem;
+    margin:4px;
   }
   
   mat-toolbar{
@@ -82,9 +102,40 @@
     letter-spacing: 1px;
   }
 
-  .fieldsearch{
-      margin-top:1.5%;
+
+  .registration_form_block{
+    box-shadow: 0px 0px 15px 0px #bfbfbf;
   }
+
+  .fieldsearch {
+    background:#ececec;
+    padding: 2%;
+    border-radius: 1px;
+  }
+  .biometricsearch{
+    background: #73940e;
+   /* border-radius: 10px; */
+  }
+  .addmorepatient{
+    background: #de4040;
+  }
+  .mat-card-content{
+    background: transparent;
+    border: 0px solid #ececec;
+  }
+  tr.mat-header-row {
+   
+    background:#ececec;
+}
+
+  .regblockbtn{
+    border-radius: 50px;
+    background: #FFF;
+    font-size: 12px;
+    letter-spacing: 1px;
+    
+  }
+
 
   .margincontent{
     margin-top:1.5%;
@@ -92,9 +143,30 @@
   .mat-button.mat-small {
     min-width: 1%;
 }
+.center{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.mat-card:not([class*=mat-elevation-z]) {
+  
+  box-shadow: 0 0px 0px 0px rgba(0,0,0,.2), 0 0px 0px 0 rgba(0,0,0,.14), 0 0px 0px 0 rgba(0,0,0,.12); 
+}
+.mat-header-cell {
+  color: rgb(9, 10, 12);
+}
+
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  padding: 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
 
 .reg-action > button{
-    margin-right: 1%;
+    
+    width: 18%;
 }
 .bttn-right{
     float:right;
@@ -112,8 +184,9 @@ th, td {
     padding: 8px;
 }
 
-.registraionTable{
+#registraionTable{
     width:100%;
+    background: #a8a8a8;
    /* border:1px solid #f3f3f3;*/
 }
 .table_head{
@@ -129,4 +202,31 @@ th, td {
     padding: 6px 17px;
     border-radius: 14px;
     color: #FFF;
+}
+
+.success{
+  background: #03943f;
+}
+
+.custmbtn{
+  font-size:11px;
+  letter-spacing: 1px;
+  border-radius:50px;
+}
+.matcustomicon{
+  font-size: 18px;
+  line-height: 22px;
+}
+
+#registrationTable table{
+  margin-top:-18px;
+}
+#registrationTable .mat-input-element {
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.btnnormal{
+  font-size:12px;
+  font-weight:500;
+  letter-spacing: 2px;
 }

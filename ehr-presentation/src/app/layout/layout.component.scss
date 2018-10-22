@@ -50,3 +50,49 @@ font-size: 12px;
 .mat-list-item-content{
 padding: 0 7px;
 }
+
+.top_header{
+  background: #FFF;
+  padding: 1% 0;
+
+   img{
+    width: 31%;
+    margin-top: 2%;
+    margin-left: 2%;
+   }
+   .datetime{
+    padding-right: 2%;
+    text-align: right;
+   }
+
+   h3{
+    letter-spacing: 5px;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color:#3f6c8d;
+   }
+   .time{
+    font-weight: 500;
+    color: #f31919;
+   }
+   .date{
+     margin-top: -13px;
+     letter-spacing: 5px;
+     font-size: 12px;
+   }
+}
+
+.welcome_title , .estate_title{
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-indent: 5px;
+}
+.mat-menu-content:not(:empty) {
+  padding-top: 0px;
+  padding-bottom: 0px;
+ 
+}
+.mat-menu-item{
+  font-size: 0.8rem;
+}
+

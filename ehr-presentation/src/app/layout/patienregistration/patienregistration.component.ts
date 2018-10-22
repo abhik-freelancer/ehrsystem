@@ -1,40 +1,24 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
-
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild , ViewEncapsulation , Inject , NgZone } from '@angular/core';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { PatientService } from '../../service/patient.service';
 import { GlobalconstantService } from '../../service/globalconstant.service';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA , MatDialogConfig} from '@angular/material';
+import { TodayspatientreglistComponent } from './../components/todayspatientreglist/todayspatientreglist.component';
+import { RegistrationService } from '../../service/registration.service';
+import { PatientadddialogComponent } from '../components/patientadddialog/patientadddialog.component';
 import * as jwt_decode from "jwt-decode";
+import { Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
+import { MatSelect, VERSION } from '@angular/material';
 
 
-
-
-
-export interface Patient {
- 
-  name: string;
-  emplcode: string;
-} 
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Mithilesh Routh', weight: 1236547891, symbol: 'Permanent'},
-  {position: 2, name: 'Aayush Kumar', weight: 3214587965, symbol: 'Dependent'},
-  
-];
-
-export class PatientsCls {
-  public patient_name: string;
-  public patient_code: string;
+interface PatientCode{
+  id: string,
+  code: string
 }
 
 @Component({
@@ -42,24 +26,47 @@ export class PatientsCls {
   templateUrl: './patienregistration.component.html',
   styleUrls: ['./patienregistration.component.css']
 })
-export class PatienregistrationComponent implements OnInit {
+export class PatienregistrationComponent implements OnInit ,OnDestroy {
+  version = VERSION;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   patientRegForm: FormGroup;
+  
   IDsearchForm: FormGroup;
   FieldsearchForm: FormGroup;
-  registerButtonActive:boolean = true;
+  patientTblRegForm: FormGroup;
+  //registerButtonActive:boolean = true;
   loaderActive:boolean = false;
+  searchLoader:boolean = false;
+  registerBtnEnable:boolean = true;
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
-
+  
   isCheked = false;
   enableAdvancesearch = false;
   disableInputField = false;
-
   enableregister = false;
-
+  displayp = 'none';
   private  patientlst:  Array<object> = [];
+  displayedColSecond: string[] = [];
+  dataSource: MatTableDataSource<any>;
+
+  todaysRegTblColumn: string[] = [
+    'action',
+    'patient_code',
+    'patient_name',
+    'birthdate',
+    'gender', 
+    'division_number' ,
+    'challan_number' ,
+    'line_number' ,
+    'mobile_one',
+    'adhar'
+  ];
+
+
+
+
 
   // patient detail info initilization
 
@@ -84,17 +91,19 @@ export class PatienregistrationComponent implements OnInit {
   tblPatientMbl:string = "";
   tblPatientAadhar:string = "";
 
+  date = new Date();
+  serializedDate = new FormControl((new Date()).toISOString());
+  patientCtrl = new FormControl();
+  listofPatient = [];
+  todaysregistrationList = [];
+  patientLst: string[];
+  selected = null;
+  @ViewChild('singleSelect') singleSelect: MatSelect; 
+  
+  
 
-
-  constructor(private patientService:PatientService,private _global:GlobalconstantService,public dialog: MatDialog) {
-    /*
-    this.filteredStates = this.patientCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(patient => patient ? this._filterStates(patient) : this.patients.slice())
-      );
-      */
-
+  constructor(private zone:NgZone,private patientService:PatientService,private _global:GlobalconstantService,public dialog: MatDialog,private registerService: RegistrationService ) {
+   
      this.patientRegForm = new FormGroup({
           searchpatientCtrl: new FormControl(''),
           hdnPatientID: new FormControl(''),
@@ -117,55 +126,28 @@ export class PatienregistrationComponent implements OnInit {
 
      this.IDsearchForm = new FormGroup({
       patientID: new FormControl(''),
+      pcodeFilterCtrl: new FormControl(''),
       patientAadhar: new FormControl('')
       });
 
       
      this.FieldsearchForm = new FormGroup({
       patientNameCtrl: new FormControl(''),
-      patientDOBCtrl: new FormControl(''),
+      patientDOBCtrl: new FormControl(new Date().toISOString()),
       patientMobileCtrl: new FormControl('')
       });
 
+    this.patientTblRegForm = new FormGroup({
+      regpcodeCtrl : new FormControl(''),
+    });
+
+
+
    }
   
-
-  date = new FormControl(new Date());
-  serializedDate = new FormControl((new Date()).toISOString());
-  patientCtrl = new FormControl();
-
-  /*
-  filteredStates: Observable<Patient[]>;
-
-  patients: Patient[] = [
-    {
-      name: 'Mithilesh Routh',
-      emplcode: 'E0001',
-     
-    
-    },
-    {
-      name: 'Abhik Ghosh',
-      emplcode: 'E0001/SO',
-    
-    },
-    {
-      name: 'Shibu Sankar',
-      emplcode: 'E0002',
-     
-    
-    },
-    {
-      name: 'Suman Mukherjee ',
-      emplcode: 'E0003',
-     
-    }
-  ];
-*/
-  listofPatient = [];
- 
-   patientLst: string[];
-   selected = null;
+   private patientcode: PatientCode[] = [];
+   public filteredMedicines: ReplaySubject<PatientCode[]> = new ReplaySubject<PatientCode[]>(1);
+   private _onDestroy = new Subject<void>();
 /*
    private _filterStates(value: string): Patient[] {
     const filterValue = value.toLowerCase();
@@ -173,6 +155,37 @@ export class PatienregistrationComponent implements OnInit {
     return this.patients.filter(patient => patient.name.toLowerCase().indexOf(filterValue) === 0);
   }
 */
+
+
+ngOnInit() {
+  this.getTodaysRegistration();
+
+  this.filteredMedicines.next(this.patientcode.slice());
+        this.IDsearchForm.get('filteredMedicines').valueChanges
+          .pipe(takeUntil(this._onDestroy))
+          .subscribe(() => {
+            this.filterPatientCode();
+          });
+
+}
+
+private filterPatientCode() {
+  if (!this.patientcode) {
+    return;
+  }
+  // get the search keyword
+  let search =  this.IDsearchForm.get('pcodeFilterCtrl').value;
+  if (!search) {
+    this.filteredMedicines.next(this.patientcode.slice());
+    return;
+  } else {
+    search = search.toLowerCase();
+  }
+  // filter the banks
+  this.filteredMedicines.next(
+    this.patientcode.filter(patientcd => patientcd.code.toLowerCase().indexOf(search) > -1)
+  );
+}
 
 
  
@@ -212,34 +225,8 @@ export class PatienregistrationComponent implements OnInit {
 
 
 
-  ngOnInit() {
-    this.getPatientLists();
-    this.getContacts();
-    let token = this.getDecodedAccessToken(localStorage.getItem("token"));
-    console.log(token.data.user_name); // show decoded token object in console
-  }
-  public  getContacts(){
-    let patient;
-    this.patientService.GetPatientListAll().subscribe((data:  Array<object>) => {
-        patient =  data;
-        this.patientlst.push(data);
-        console.log(data);
-    });
-  }
 
 
-  getPatientLists(){
-    let dataval;
-    let patiendata;
-    this.patientService.getPatientList().then(data => {
-      dataval = data;
-      patiendata = dataval.patient;
-      this.listofPatient.push(patiendata);
-    },
-    error => {
-     console.log("There is some error in Patient list...");
-   });
-  }
 
 
   getPatientDetail(patient){
@@ -268,7 +255,36 @@ export class PatienregistrationComponent implements OnInit {
     }
   }
 
-  /*
+
+  getTodaysRegistration() {
+    let dataval;
+    let regdata;
+    this.registerService.getTodaysRegistration().then(data => {
+      dataval = data;
+      regdata = dataval.todaysreg_data;
+      this.todaysregistrationList.push(regdata);
+      this.todaysRegTblColumn = [
+                          'action',
+                          'patient_code',
+                          'patient_name',
+                          'birthdate',
+                          'gender', 
+                          'division_number' ,
+                          'challan_number' ,
+                          'line_number' ,
+                          'mobile_one',
+                          'adhar'
+                          ];
+      this.dataSource = new MatTableDataSource(this.todaysregistrationList[0]);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    },
+    error => {
+     console.log("error in todays registration list");
+   });
+  }
+
+/*
   onSubmit(){
 
     this.registerButtonActive = false;
@@ -291,52 +307,208 @@ export class PatienregistrationComponent implements OnInit {
      });
 
   }
-  */
+*/
 
-  searchPatient(){
+  searchPatient() {
+    this.searchLoader = true;
+   // this.registerButtonActive = true;
+    this.displayp = 'none';
+    
+   // this.loaderActive = false;
+    
     let searchData;
     let searchType;
-    if(this.enableAdvancesearch){
+    if ( this.enableAdvancesearch ) {
        searchData = this.FieldsearchForm.value;
-      searchType = "ADV";
-    }
-    else{
+       searchType = 'ADV';
+    } else {
       console.log(this.IDsearchForm.value);
       searchData = this.IDsearchForm.value;
-      searchType = "BASIC";
+      searchType = 'BASIC';
     }
-   
-
     let response;
-
-    this.patientService.searchPatient(searchData,searchType).then(data => {
+    let pdata;
+  
+    this.patientService.searchPatient(searchData, searchType).then(data => {
       response = data;
-      if(response.msg_status==200){
-        this.enableregister = true;
-        let pdata = response.patient;
-        console.log(pdata.mobile_two);
+      this.searchLoader = false;
+      
+      if (response.msg_status === 200 && pdata!="") {
+        
+        //this.registerButtonActive = true;
+        //this.enableregister = true;
+        this.displayp = 'table-row';
+
+        this.displayedColSecond = [
+          'reg-action' ,
+          'reg-patientid' ,
+          'reg-patientname' ,
+          'reg-patientdob' ,
+          'reg-patientgender' ,
+          'reg-patientdivision' ,
+          'reg-patientchallan' ,
+          'reg-patientline' ,
+          'reg-patientmobile' ,
+          'reg-patientaadhar' 
+          ];
+
+          this.tblPatientID = null;
+          this.tblPatientName = null;
+          this.tblPatientDOB = null;
+          this.tblPatientGender = null;
+          this.tblPatientDivision = null;
+          this.tblPatientChallan = null;
+          this.tblPatientLine = null;
+          this.tblPatientMbl = null;
+          this.tblPatientAadhar = null;
+        this.zone.run(() => { // <== added
+          pdata = response.patient;
+
         this.tblPatientID = pdata.patient_code;
         this.tblPatientName = pdata.patient_name;
-        this.tblPatientDOB = pdata.dob;
+        this.tblPatientDOB = pdata.birthdate;
         this.tblPatientGender = pdata.gender;
         this.tblPatientDivision = pdata.division_number;
         this.tblPatientChallan = pdata.challan_number;
         this.tblPatientLine = pdata.line_number;
         this.tblPatientMbl = pdata.mobile_one;
         this.tblPatientAadhar = pdata.adhar;
+
+        console.log("PID1 "+this.tblPatientID);
+        console.log("PID2 "+this.tblPatientName);
+        console.log("PID3 "+this.tblPatientDOB);
+        console.log("PID4 "+this.tblPatientGender);
+        console.log("PID5 "+this.tblPatientDivision);
+        console.log("PID6 "+this.tblPatientChallan);
+        console.log("PID7 "+this.tblPatientLine);
+        console.log("PID8 "+this.tblPatientMbl);
+        console.log("PID9 "+this.tblPatientAadhar);
+
+        this.patientTblRegForm.patchValue({
+          regpcodeCtrl: pdata.patient_code
+         
+        });
+        
+        this.enableregister = true;
+      });
+       
+      } else {
+      //  this.enableregister = false;
+      //  this.registerButtonActive = true;
+       // this.loaderActive = false;
+      }
+     },
+       error => {
+         console.log('There is some error on submitting...');
+     });
+  }
+
+
+  registerPtc() {
+    //this.registerButtonActive = false;
+    //this.loaderActive = true;
+    this.registerBtnEnable = false;
+
+    const pcode = this.patientTblRegForm.get("regpcodeCtrl").value;
+    let response;
+    this.registerService.registerPatient(pcode).then(data => {
+      response = data;
+      this.registerBtnEnable = true;
+      if(response.msg_status==200) {
+       // location.reload();
+        //this.getTodaysRegistration();
+        this.todaysregistrationList = [];
+        this.getTodaysRegistration();
+
+        //this.registerButtonActive = true;
+       // this.loaderActive = false;
+        this.enableregister = false;
+        
+      
+        this.tblPatientID = null;
+        this.tblPatientName = null;
+        this.tblPatientDOB = null;
+        this.tblPatientGender = null;
+        this.tblPatientDivision = null;
+        this.tblPatientChallan = null;
+        this.tblPatientLine = null;
+        this.tblPatientMbl = null;
+        this.tblPatientAadhar = null;
+        this.displayp = 'none';
+
+        
+
       }
       else{
-        this.enableregister = false;
-        this.registerButtonActive = true;
+      //  this.registerButtonActive = true;
         this.loaderActive = false;
       }
      },
        error => {
          console.log("There is some error on submitting...");
      });
+    
   }
 
 
+  openDialog() {
+    const dialogRef = this.dialog.open(PatientadddialogComponent, {
+      width: '900px',
+      data: ''
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+    
+      if(result.from=="Save"){
+        this.displayedColSecond = [
+          'reg-action' ,
+          'reg-patientid' ,
+          'reg-patientname' ,
+          'reg-patientdob' ,
+          'reg-patientgender' ,
+          'reg-patientdivision' ,
+          'reg-patientchallan' ,
+          'reg-patientline' ,
+          'reg-patientmobile' ,
+          'reg-patientaadhar' 
+          ];
+      this.enableregister = true;
+      this.displayp = 'table-row';
+  
+    
+       
+        this.tblPatientID = result.patientcode;
+        this.tblPatientName = result.patientname;
+        this.tblPatientDOB = result.dob;
+        this.tblPatientGender = result.gender;
+        this.tblPatientDivision = result.division;
+        this.tblPatientChallan = result.challan;
+        this.tblPatientLine = result.line;
+        this.tblPatientMbl = result.mobile;
+        this.tblPatientAadhar = result.aadhar;
+  
+  
+        this.patientTblRegForm.patchValue({
+          regpcodeCtrl: result.patientcode
+        });
+      }
 
+    });
+  }
+  
+
+
+ 
+
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  
 
 }

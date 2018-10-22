@@ -6,7 +6,6 @@ import {TodaysregistrationRoutingModule  } from './todaysregistration-routing.mo
 import { TodaysregistrationComponent } from './todaysregistration.component';
 import { AppMaterialModule } from '../../app-material/app-material.module';
 
-
 @NgModule({
     imports: [
         CommonModule,

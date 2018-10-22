@@ -30,8 +30,9 @@ class Login  extends CI_Controller{
             
             $json_response = array(
                                     "msg_status" => HTTP_LOGIN,
-				    "msg_data" => "success",
-                                    "token"=>$token_JWT
+									"msg_data" => "success",
+                                    "token"=>$token_JWT,
+									"userdata"=>$user
                                    
 				);
         }else{
@@ -64,7 +65,8 @@ class Login  extends CI_Controller{
             'user_id'   => $user->user_id, // userid from the users table
             'user_name' => $user->user_name,
             'user_role_name'=>$user->user_role_name,
-            'user_role_code'=>$user->user_role_code
+            'user_role_code'=>$user->user_role_code,
+			'hospital_id'=>$user->hospital_id
             ]
         ];
         $secreat_key = $this->config->item('enc_secrete_key');

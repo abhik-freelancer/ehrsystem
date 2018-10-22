@@ -65,12 +65,38 @@ export class PatientService {
       
     }
 
+    getPatientByCode(pcode){
+      let myData = JSON.stringify({pcode: pcode});
+       return new Promise(resolve => {
+          this.http.post(this.global.patientBycode_URL,myData).subscribe(data => {
+            resolve(data);
+           
+          }, err => {
+            console.log(err);
+          });
+        });
+      
+    }
+
 
     registerPatient(formValue){
       let hospitalid = 1; // will come from global file // need to change
       let myData = JSON.stringify({hospital_id: hospitalid,values:formValue});
        return new Promise(resolve => {
           this.http.post(this.global.registerPatient_URL,myData).subscribe(data => {
+            resolve(data);
+           
+          }, err => {
+            console.log(err);
+          });
+        });
+    }
+
+    addNewPatient(formValue){
+    
+      let myData = JSON.stringify({values:formValue});
+       return new Promise(resolve => {
+          this.http.post(this.global.addnewPatient_URL,myData).subscribe(data => {
             resolve(data);
            
           }, err => {

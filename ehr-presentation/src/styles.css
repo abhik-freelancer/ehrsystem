@@ -8,6 +8,11 @@ body { margin: 0; font-family: 'Roboto', sans-serif; }
 .themecolor{
     background: #489f0b;
 }
+
+.primarycolor {
+    background: #1f6fc9;
+    color: #FFF;
+} 
 .customtoolbar{
 height: 45px !important;
 font-size: 0.9rem;
@@ -25,4 +30,12 @@ color: #366b05;
     text-transform: uppercase;
 }
 
+.fullwidthinp{
+    width:100%;
+  }
 
+.center{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 
 
-const routes: Routes = [
+const routes: Routes = [ 
     {
         path: '',
         component: LayoutComponent,
@@ -13,7 +13,8 @@ const routes: Routes = [
             { path: 'forms', loadChildren: './form/form.module#FormModule' },
             { path: 'reg', loadChildren: './patientreg/patientreg.module#PatientregModule' },
             { path: 'registration', loadChildren: './patienregistration/patienregistration.module#PatienregistrationModule' },
-            {path:'todaysreg',loadChildren:'./todaysregistration/todaysregistration.module#TodaysregistrationModule'}
+            { path: 'todaysreg' , loadChildren:'./todaysregistration/todaysregistration.module#TodaysregistrationModule'},
+            { path: 'opd', loadChildren:'./opdprepration/opdprepration.module#OpdpreprationModule'}
         
             
         ]

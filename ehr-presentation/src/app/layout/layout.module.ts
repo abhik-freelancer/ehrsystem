@@ -12,10 +12,6 @@ import { OkdialogComponent } from './components/dialog/okdialog/okdialog.compone
 
 
 
-
-
-
-
 @NgModule({
     imports: [
         CommonModule,
@@ -24,7 +20,6 @@ import { OkdialogComponent } from './components/dialog/okdialog/okdialog.compone
         FormsModule,
         ReactiveFormsModule
     ],
-    
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent, OkdialogComponent],
  
 })

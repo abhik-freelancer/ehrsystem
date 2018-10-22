@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatToolbarModule, MatSidenavModule, MatListModule ,MatMenuModule , MatNativeDateModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatListModule ,MatMenuModule , MatNativeDateModule ,MatSortModule , MatPaginatorModule, MatButtonToggleModule   } from '@angular/material';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -18,6 +18,13 @@ import {MatTableModule} from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import {MatBadgeModule} from '@angular/material/badge';
+
+
+
 
 
 @NgModule({
@@ -43,7 +50,15 @@ import { MatTabsModule } from '@angular/material';
     MatTableModule,
     FlexLayoutModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatRadioModule,
+    MatSelectModule,
+    NgxMatSelectSearchModule,
+    MatButtonToggleModule,
+    MatBadgeModule
+    
   ],
   declarations: [],
   
@@ -68,7 +83,14 @@ import { MatTabsModule } from '@angular/material';
     MatTableModule,
     FlexLayoutModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatRadioModule,
+    MatSelectModule,
+    NgxMatSelectSearchModule,
+    MatButtonToggleModule,
+    MatBadgeModule
   ]
 })
 export class AppMaterialModule { }

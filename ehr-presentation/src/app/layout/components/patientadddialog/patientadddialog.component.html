@@ -1,0 +1,119 @@
+  <div style="float: right;cursor: pointer;" (click)="onNoClick()">
+  <mat-icon>clear</mat-icon>
+  </div>
+  
+  <h2 mat-dialog-title>Add Patient</h2>
+  
+  <form [formGroup]="patientAddForm"  novalidate (ngSubmit)="onSubmit(patientAddForm.value)">
+  <mat-dialog-content>
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+
+          <div fxFlex="30%">
+              <mat-form-field class="fullwidthinp">
+                  <input matInput placeholder="Patient Code" formControlName="pcodeCtrl"/>
+              </mat-form-field>
+              <mat-form-field class="fullwidthinp">
+                <input matInput placeholder="Patient Name" formControlName="pnameCtrl"/>
+              </mat-form-field>
+            
+              <mat-form-field class="fullwidthinp">
+                    <input matInput [matDatepicker]="picker1" placeholder="Date of Birth"  formControlName="dobCtrl">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+
+                <div style="padding-bottom: 8px;">
+                    <mat-radio-group  formControlName="genderCtrl">
+                        <mat-radio-button value="M" > Male&nbsp;&nbsp; </mat-radio-button>
+                        <mat-radio-button value="F" > Female&nbsp;&nbsp; </mat-radio-button>
+                        <mat-radio-button value="O" > Other </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                
+                  
+              <mat-form-field class="fullwidthinp">
+                    <input matInput placeholder="Mobile No"  formControlName="mobileCtrl" />
+                </mat-form-field>
+                <mat-form-field class="fullwidthinp">
+                    <input matInput placeholder="Alternate Mobile No"  formControlName="alternatemblCtrl" />
+                </mat-form-field>
+          </div>
+          <mat-divider [vertical]="true"></mat-divider>
+
+          <div fxFlex="30%" >
+            
+          
+            <mat-form-field class="fullwidthinp">
+                <input matInput placeholder="Aadhar No" formControlName="aadharCtrl" />
+            </mat-form-field>
+
+            <mat-form-field class="fullwidthinp">
+                <mat-select placeholder="Blood Group" [disableOptionCentering]="false" formControlName="bldgrpCtrl">
+                  <mat-option *ngFor="let bloodgrp of bloodGroupList[0]" [value]="bloodgrp.id">
+                    {{bloodgrp.bld_group_code}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+              <div style="padding-bottom: 8px;">
+                <mat-radio-group formControlName="patienttypeCtrl">
+                  <mat-radio-button  *ngFor="let ptype of patientTypeList[0]" [value]="ptype.patient_type_id" (click)="enableAssociate(ptype.ask_for_relation)">
+                        {{ptype.alias_code}}&nbsp;&nbsp;
+                      </mat-radio-button>
+
+                </mat-radio-group>
+            </div>
+
+            <mat-form-field class="fullwidthinp">
+                <input matInput placeholder="Associate Id" formControlName="associateCtrl"/>
+            </mat-form-field>
+
+            <mat-form-field class="fullwidthinp">
+                <mat-select placeholder="Relation" formControlName="relationCtrl">
+                  <mat-option *ngFor="let relations of relationsList[0]" [value]="relations.id">
+                    {{relations.relation}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+           
+        </div>
+
+        <mat-divider [vertical]="true"></mat-divider>
+
+        <div fxFlex="30%">
+           
+            <mat-form-field class="fullwidthinp">
+              <input matInput placeholder="Line No" formControlName="linenoCtrl" />
+            </mat-form-field>
+
+            <mat-form-field class="fullwidthinp">
+              <input matInput placeholder="Division No" formControlName="divisionCtrl" />
+            </mat-form-field>
+
+            <mat-form-field class="fullwidthinp">
+              <input matInput placeholder="Challan No" formControlName="challannoCtrl" />
+            </mat-form-field>
+
+            <mat-form-field class="fullwidthinp">
+                <mat-select placeholder="Estate" formControlName="estateCtrl" >
+                  <mat-option *ngFor="let estate of estateList[0]" [value]="estate.id">
+                    {{estate.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+    </div>
+    
+  </mat-dialog-content>
+  
+  <mat-dialog-actions >
+
+    <button mat-raised-button color="accent" (click)="onNoClick()" >Close</button>
+    <button class="mat-raised-button mat-primary" type="submit" *ngIf="registerButtonActive">Save</button>
+    <button class="mat-raised-button" *ngIf="loaderActive" >
+      <mat-spinner [diameter]="25" color="primary" ></mat-spinner>
+    </button>
+    
+  </mat-dialog-actions>
+</form>

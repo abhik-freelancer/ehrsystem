@@ -7,6 +7,9 @@ import { FormsModule ,ReactiveFormsModule } from '@angular/forms';
 import { PatienregistrationRoutingModule } from './patienregistration-routing.module';
 import { PatienregistrationComponent } from './patienregistration.component';
 import { TodayspatientreglistComponent } from '../components/todayspatientreglist/todayspatientreglist.component';
+import { PatientadddialogComponent } from '../components/patientadddialog/patientadddialog.component';
+
+
 
 
 
@@ -23,6 +26,8 @@ import { TodayspatientreglistComponent } from '../components/todayspatientreglis
     ReactiveFormsModule
     
   ],
-  declarations: [PatienregistrationComponent,TodayspatientreglistComponent]
+  providers:[],
+  declarations: [PatienregistrationComponent,TodayspatientreglistComponent,PatientadddialogComponent],
+  entryComponents : [TodayspatientreglistComponent,PatientadddialogComponent]
 })
 export class PatienregistrationModule { }

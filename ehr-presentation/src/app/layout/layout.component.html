@@ -14,7 +14,7 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)">
-    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-toolbar class="primarycolor" >Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink='/panel/dashboard'><mat-icon>dashboard</mat-icon> Dashboard</a>
       <a mat-list-item routerLink="/panel/forms"><mat-icon>queue</mat-icon> Registration</a>
@@ -32,7 +32,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar class="primarycolor">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -77,38 +77,57 @@
   
      
       <mat-sidenav-content>
-        <mat-toolbar color="primary">
-            
-        
-           
-          
-         
-            
-        
-          
-              <p >Welcome Suman</p>
-              <span class="fill-remaining-space">
-         
-                      <mat-menu #menu="matMenu" [overlapTrigger]="false">
-                        <button mat-menu-item>
-                          <mat-icon>home</mat-icon>
-                          <span>Home</span>
-                        </button>
-                       
-                       
-                        <button mat-menu-item>
-                          <mat-icon>exit_to_app</mat-icon>
-                          <span>Logout</span>
-                        </button>
-                      </mat-menu>
-                    </span>
-                    <span class="fill-remaining-space">EHR Solutions</span>
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+          <mat-toolbar class="top_header">
+              
+                <div fxFlex="50%">
+                  <img src="assets/logo.png" />
+                </div>
+                <div fxFlex="50%" class="datetime">
                   
-                     <button mat-icon-button [matMenuTriggerFor]="menu">
-                        <mat-icon>more_vert</mat-icon>
-                      </button>
+                  <h3 class="time">{{ time | date:'hh:mm:ss aa'}}</h3>
+                  <h3 class="date">{{ time | date:'dd MMM, yyyy'}}</h3>
+                </div>
+              
+          </mat-toolbar>
+        </div>
 
-        </mat-toolbar>
+
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+            <mat-toolbar class="primarycolor" >
+                <mat-icon>home</mat-icon>
+                <div fxFlex="50%">
+                   
+                    <p class="welcome_title">Welcome {{username}} </p>
+                   
+
+                    <span class="fill-remaining-space">
+                        <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                          <button mat-menu-item>
+                            <mat-icon>home</mat-icon>
+                            <span>Home</span>
+                          </button>
+                         <button mat-menu-item (click)="Logout()">
+                            <mat-icon>exit_to_app</mat-icon>
+                            <span>Logout</span>
+                          </button>
+                        </mat-menu>
+                      </span>
+
+                   
+                </div>
+                <div fxFlex="50%" >
+                    <span class="estate_title">Powai </span>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" style="float: right;" >
+                        <mat-icon>person_pin</mat-icon>
+                      </button>
+                </div>
+                
+            </mat-toolbar>
+        </div>
+      
+
+
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
