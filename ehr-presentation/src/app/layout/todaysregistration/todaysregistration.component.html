@@ -5,10 +5,20 @@
     
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
 
+           
+
+
             <div class="patientsearchTabs" fxFlex="90%">
                     <mat-toolbar style="background: transparent;"> 
                             <h4 class="card_title"> Today's Registration</h4>
                     </mat-toolbar>
+                    <mat-card>
+                        <button mat-raised-button color="primary" class="customeBtn" (click)=gotoSickLeaveApprovalList()>
+                            Sick leave approval
+                        </button>
+                    </mat-card>
+                    
+
                 <mat-tab-group (selectedTabChange)="tabChanged($event)">
                     <mat-tab>
                         <ng-template mat-tab-label>

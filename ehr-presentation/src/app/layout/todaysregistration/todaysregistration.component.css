@@ -72,3 +72,10 @@ th.mat-header-cell {
     font-size: 13px;
     letter-spacing: 1px;
 }
+.customeBtn{
+    border: 0;
+    background: #0e58c8;
+    padding: 6px 17px;
+    border-radius: 14px;
+    color: #FFF;
+}

@@ -10,7 +10,11 @@ export class GlobalconstantService {
   private APIURL = "http://192.168.2.16:8088/ehrsystem/ehrsrvc/";
   //private APIURL = "http://192.168.2.10/ehrsystem/ehrsrvc/";
   //private APIURL = "http://127.0.0.1:8011/ehrsystem/ehrsrvc/";
+<<<<<<< HEAD
+  private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
+=======
   //private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
+>>>>>>> 4ff04096087417bd39285a086e8ed5a09d4f2726
   private APIKEY = "24ecdccb1258eaacfd441e012ac034392403c692";
 
   // URL INFO

@@ -14,7 +14,8 @@ const routes: Routes = [
             { path: 'reg', loadChildren: './patientreg/patientreg.module#PatientregModule' },
             { path: 'registration', loadChildren: './patienregistration/patienregistration.module#PatienregistrationModule' },
             { path: 'todaysreg' , loadChildren:'./todaysregistration/todaysregistration.module#TodaysregistrationModule'},
-            { path: 'opd', loadChildren:'./opdprepration/opdprepration.module#OpdpreprationModule'}
+            { path: 'opd', loadChildren:'./opdprepration/opdprepration.module#OpdpreprationModule'},
+            {path:'sickapproval',loadChildren:'./sickleaveapproval/sickleaveapproval.module#sickleaveapprovalModule'}
         
             
         ]
