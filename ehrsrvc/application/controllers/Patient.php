@@ -17,8 +17,8 @@ class Patient extends CI_Controller{
         $json_response = [];
         $headers = $this->input->request_headers();
         
-        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
         
+        if(CUSTOMHEADER::getAuthotoken($headers)){$client_token=CUSTOMHEADER::getAuthotoken;}else{$client_token="";}
         //var_dump($client_token);
         $server_token="";
         if($client_token!=""){
@@ -74,7 +74,7 @@ class Patient extends CI_Controller{
         $json_response = [];
         $headers = $this->input->request_headers();
         
-        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+         if(CUSTOMHEADER::getAuthotoken($headers)){$client_token=CUSTOMHEADER::getAuthotoken;}else{$client_token="";}
         
 		$server_token="";
         if($client_token!=""){
@@ -119,7 +119,7 @@ class Patient extends CI_Controller{
         $json_response = [];
         $headers = $this->input->request_headers();
         
-        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+         if(CUSTOMHEADER::getAuthotoken($headers)){$client_token=CUSTOMHEADER::getAuthotoken;}else{$client_token="";}
         
 		$server_token="";
         if($client_token!=""){
@@ -166,7 +166,7 @@ class Patient extends CI_Controller{
         $json_response = [];
         $headers = $this->input->request_headers();
         
-        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+         if(CUSTOMHEADER::getAuthotoken($headers)){$client_token=CUSTOMHEADER::getAuthotoken;}else{$client_token="";}
         
 		$server_token="";
         if($client_token!=""){
@@ -221,7 +221,7 @@ class Patient extends CI_Controller{
         $json_response = [];
         $headers = $this->input->request_headers();
         
-        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+         if(CUSTOMHEADER::getAuthotoken($headers)){$client_token=CUSTOMHEADER::getAuthotoken;}else{$client_token="";}
         
 	$server_token="";
         if($client_token!=""){
