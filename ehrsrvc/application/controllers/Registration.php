@@ -14,14 +14,14 @@ class Registration extends CI_Controller{
         CUSTOMHEADER::getCustomHeader();
         $json_response = [];
         $headers = $this->input->request_headers();
-		$client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+		//$client_token = (!(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+		if(CUSTOMHEADER::getAuthotoken($headers)){$client_token = CUSTOMHEADER::getAuthotoken($headers);}else{$client_token = "";}
 		
 		$server_token="";
         if($client_token!=""){
             $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
-           
         } 
-        if($client_token!=""){
+        if($client_token!= ""){
         if($client_token->jti==$server_token ){
         
 		$token_data = $client_token->data;
@@ -67,7 +67,9 @@ class Registration extends CI_Controller{
         $json_response = [];
         $headers = $this->input->request_headers();
         
-        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+       $client_token = (!(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+	   
+
         
 		$server_token="";
         if($client_token!=""){
@@ -127,7 +129,7 @@ class Registration extends CI_Controller{
         $json_response = [];
         $headers = $this->input->request_headers();
         
-        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+        $client_token = (!(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
         
 		$server_token="";
         if($client_token!=""){
@@ -185,7 +187,7 @@ class Registration extends CI_Controller{
         $json_response = [];
         $headers = $this->input->request_headers();
         
-        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+        $client_token = (!(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
         
 		$server_token="";
         if($client_token!=""){
@@ -231,7 +233,7 @@ class Registration extends CI_Controller{
         CUSTOMHEADER::getCustomHeader();
         $json_response = [];
         $headers = $this->input->request_headers();
-		$client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+		$client_token = (!(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
 		
 		$server_token="";
         if($client_token!=""){
