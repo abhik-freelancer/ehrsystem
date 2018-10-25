@@ -46,5 +46,17 @@ export class RegistrationService {
       });
     
   }
+
+  sickApprove(opdid,status){
+   
+    let myData = JSON.stringify({opd_prescription_id:opdid,sick_leave_apprv:status});
+     return new Promise(resolve => {
+        this.http.post(this.global.sickApprovalUpdate_URL,myData).subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
+      });
+  }
   
 }

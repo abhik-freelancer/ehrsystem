@@ -199,6 +199,117 @@ class Patient_model extends CI_Model{
             }
         return $patient_data;
 	}
+        
+        
+        /**
+         * @author Abhik
+         * @desc get list of sick approved patient
+         * @date 22/10/2018
+         */
+        
+        public function getSickApprovedList(){
+            $resultdata="";
+            
+//            if($regDate!=""){
+//                
+//            }
+            
+            
+            $where = [
+                "opd_prescription.sick_flag"=>"Y",
+                "DATE_FORMAT(`opd_prescription`.`date`,'%Y-%m-%d')"=>date("Y-m-d")
+                
+            ];
+            $query = $this->db->select("opd_prescription.*,patients.*")
+                    ->from("opd_prescription")
+                    ->join("patients","opd_prescription.patient_id=patients.patient_id")
+                    ->where($where)
+                    ->get();
+            if($query->num_rows()>0){
+                $resultdata=$query->result();
+                
+            }
+            return $resultdata;
+        }
+        /**
+         * 
+         * @param type $request
+         */
+        public function updateSickApprovalStatus($opdid,$status)
+        {
+            $rsltSt = FALSE;
+            try {
+                $this->db->trans_begin();
+                
+                $this->db->where("opd_prescription_id",$opdid);
+                $this->db->update("opd_prescription", array('sick_leave_apprv' => $status));
+                
+                
+                
+                if($this->db->trans_status()===FALSE){
+                     $this->db->trans_rollback();
+                     $rsltSt = FALSE;
+                    
+                }else
+                {
+                    $this->db->trans_commit();
+                    $rsltSt=TRUE;
+                }
+            } catch (Exception $exc) {
+                echo $exc->getTraceAsString();
+            }
+            return $rsltSt;
+        }
+
+		public function getCountTotalRegister($currentDate)
+		{
+			$totalRegister = 0;
+			$searchDate="";
+			if($currentDate!=""){
+				$searchDate =$currentDate;
+			}else{
+				$searchDate = date("Y-m-d");
+			}
+			
+			$where=[
+				"DATE_FORMAT(`opd_prescription`.`date`,'%Y-%m-%d')"=>$searchDate
+			];
+			$query = $this->db->select ("COUNT(*)as cnt")->from("opd_prescription")->where($where)->get();
+			//echo($this->db->last_query());
+			if($query->num_rows()>0){
+				$row = $query->row();
+				$totalRegister = $row->cnt;
+			
+			}
+                        //echo($totalRegister);
+			return $totalRegister;
+		}
+
+       public function	getCountSickApprove($currentDate)
+	   {
+			$totalSickApproved = 0;
+			$searchDate="";
+			if($currentDate!=""){
+				$searchDate =$currentDate;
+			}else{
+				$searchDate = date("Y-m-d");
+			}
+			
+			$where=[
+				"DATE_FORMAT(`opd_prescription`.`date`,'%Y-%m-%d')"=>$searchDate,
+				"opd_prescription.sick_leave_apprv"=>'Y'
+			];
+			$query = $this->db->select ("COUNT(*)as cnt")->from("opd_prescription")->where($where)->get();
+                        //echo($this->db->last_query());
+			if($query->num_rows()>0){
+				$row = $query->row();
+				$totalSickApproved = $row->cnt;
+			
+			}
+                        //echo($totalSickApproved);
+			return $totalSickApproved;
+	   
+	   }
 
     
 }

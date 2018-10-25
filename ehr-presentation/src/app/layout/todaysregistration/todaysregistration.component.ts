@@ -196,6 +196,14 @@ export class TodaysregistrationComponent implements OnInit {
     this.router.navigate(['/panel/opd']);
   }
 
+  gotoSickLeaveApprovalList(){
+    
+    this.router.navigateByUrl('panel/sickapproval')
+  }
+
+
+
+
 }
 
 

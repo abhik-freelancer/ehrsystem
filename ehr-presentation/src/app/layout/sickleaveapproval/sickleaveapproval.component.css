@@ -1,0 +1,22 @@
+.table-sickleave {
+    width: 100%;
+  }
+
+  .custm-btn{
+    font-size: 11px;
+    letter-spacing: 1px;
+    border-radius: 50px;
+    background: #03943f;
+  }
+  .custm-btn-blue{
+    font-size: 11px;
+    letter-spacing: 1px;
+    border-radius: 50px;
+    background: #1f6fc9;
+    }
+
+    .example-fill-remaining-space {
+      /* This fills the remaining space, by using flexbox. 
+         Every toolbar row uses a flexbox row layout. */
+      flex: 1 1 auto;
+    }

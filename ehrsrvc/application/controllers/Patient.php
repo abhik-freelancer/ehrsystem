@@ -211,5 +211,156 @@ class Patient extends CI_Controller{
 		$diff = date_diff(date_create($dateOfBirth), date_create($today));
 		return $diff->format('%y');
 	}
+        
+        public function getSickApprovedList(){
+        CUSTOMHEADER::getCustomHeader();
+        $json_response = [];
+        $headers = $this->input->request_headers();
+        
+        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+        
+	$server_token="";
+        if($client_token!=""){
+            $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+        }
+       
+        if($client_token!=""){
+        if($client_token->jti==$server_token ){
+            
+                   $resultdata = $this->patient->getSickApprovedList();
+			
+		    $json_response = [
+                     "msg_status"=>HTTP_SUCCESS,
+                     "msg_data"=>"Authentication ok.",
+                     "sickleaveList"=>$resultdata,
+		
+            ];
+            
+        }else{
+            $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+        }
+        }else{
+             $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+
+        }
+        header('Content-Type: application/json');
+		echo json_encode( $json_response );
+		exit;
+        }
+        
+        
+        public function getSickLeaveApproveCount()
+        {
+            CUSTOMHEADER::getCustomHeader();
+        $json_response = [];
+        $headers = $this->input->request_headers();
+        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers)) ? CUSTOMHEADER::getAuthotoken($headers) : "");
+        $server_token = "";
+        if ($client_token != "") {
+            $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+        }
+
+        if ($client_token != "") {
+            if ($client_token->jti == $server_token) {
+
+               // $postdata = file_get_contents("php://input");
+               // $request = json_decode($postdata);
+               
+				//$currentDate = $request->current_date;
+				$currentDate="";
+				
+				$totalRegister =	$this->patient->getCountTotalRegister($currentDate);
+				$totalRegisterSickApprove = $this->patient->getCountSickApprove($currentDate);
+
+
+                //$updateData = $this->patient->updateSickApprovalStatus($opdid, $status);
+				
+				$response_arr =["totalApproved"=>$totalRegisterSickApprove,"totalRegister"=>$totalRegister];
+
+				$json_response =[
+						"msg_status" => HTTP_SUCCESS,
+                                                "msg_data" => "",
+                                                "result" => $response_arr
+				
+				];
+
+                
+            } else {
+                $json_response = [
+                    "msg_status" => HTTP_AUTH_FAIL,
+                    "msg_data" => "Authentication fail."
+                ];
+            }
+        } else {
+            $json_response = [
+                "msg_status" => HTTP_AUTH_FAIL,
+                "msg_data" => "Authentication fail."
+            ];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($json_response);
+        exit;
+    
+   }
+        
+        
+        public function updateSickLeaveApprovalStatus()
+        {
+
+        CUSTOMHEADER::getCustomHeader();
+        $json_response = [];
+        $headers = $this->input->request_headers();
+        $client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers)) ? CUSTOMHEADER::getAuthotoken($headers) : "");
+        $server_token = "";
+        if ($client_token != "") {
+            $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+        }
+
+        if ($client_token != "") {
+            if ($client_token->jti == $server_token) {
+
+                $postdata = file_get_contents("php://input");
+                $request = json_decode($postdata);
+                $opdid = $request->opd_prescription_id;
+                $status = $request->sick_leave_apprv;
+                $updateData = $this->patient->updateSickApprovalStatus($opdid, $status);
+
+
+
+                if ($updateData) {
+                    $json_response = [
+                        "msg_status" => HTTP_SUCCESS,
+                        "msg_data" => "Update success",
+                        "result" => 1
+                    ];
+                } else {
+                    $json_response = [
+                        "msg_status" => HTTP_FAIL,
+                        "msg_data" => "Update error",
+                        "result" => 0
+                    ];
+                }
+            } else {
+                $json_response = [
+                    "msg_status" => HTTP_AUTH_FAIL,
+                    "msg_data" => "Authentication fail."
+                ];
+            }
+        } else {
+            $json_response = [
+                "msg_status" => HTTP_AUTH_FAIL,
+                "msg_data" => "Authentication fail."
+            ];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($json_response);
+        exit;
+    }
     
 }

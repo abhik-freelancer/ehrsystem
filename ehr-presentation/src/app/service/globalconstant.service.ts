@@ -7,9 +7,9 @@ export class GlobalconstantService {
 
   constructor() { }
 
- // private APIURL = "http://192.168.2.16:8088/ehrsystem/ehrsrvc/";
+  private APIURL = "http://192.168.2.16:8088/ehrsystem/ehrsrvc/";
   //private APIURL = "http://192.168.2.10/ehrsystem/ehrsrvc/";
-  private APIURL = "http://127.0.0.1:8011/ehrsystem/ehrsrvc/";
+  //private APIURL = "http://127.0.0.1:8011/ehrsystem/ehrsrvc/";
   //private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
   private APIKEY = "24ecdccb1258eaacfd441e012ac034392403c692";
 
@@ -42,6 +42,11 @@ export class GlobalconstantService {
   public medicinelist_URL = this.APIURL+"medicine/getMedicineBySymptoms";
 
   public todaysRegDoct_URL = this.APIURL+"registration/getTodaysRegDoct";
+
+  //sick leave approval
+  public sickApprovalList_URL = this.APIURL +"patient/getSickApprovedList";
+  public sickApprovalUpdate_URL = this.APIURL +"patient/updateSickLeaveApprovalStatus";
+  public sickApprovalCount_URL = this.APIURL+"patient/getSickLeaveApproveCount";
 
   getApiURL(){
     return this.APIURL;
