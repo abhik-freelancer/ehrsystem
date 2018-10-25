@@ -2,7 +2,8 @@ import {Component, Injectable } from '@angular/core';
 
 // Name Service
 export interface myData {
-  name:string;
+  name : string;
+  regid : string;
 }
 
 
@@ -13,10 +14,13 @@ export class DatashareService {
   sharedData:string = "String from myService";
   constructor() { }
 
-  sharingData: myData={name:"nyks"};
+  sharingData: myData= {
+     name:"",
+     regid:""
+    };
   saveData(str){
-    console.log('save data function called' + str + this.sharingData.name);
     this.sharingData.name=str; 
+
   }
   getData()
   {

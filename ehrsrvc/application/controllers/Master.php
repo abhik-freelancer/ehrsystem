@@ -8,6 +8,8 @@ class Master extends CI_Controller{
         $this->load->model("Bloodgroup_model", "bloodgroup", TRUE); 
         $this->load->model("Patienttype_model", "patienttype", TRUE); 
         $this->load->model("Relation_model", "relation", TRUE); 
+        $this->load->model("Investigation_model", "investigation", TRUE); 
+        $this->load->model("Hospital_model", "hospital", TRUE); 
 		
 
         
@@ -120,6 +122,88 @@ class Master extends CI_Controller{
 		$hospital_id = $token_data->hospital_id;
 		
             $resultdata = $this->relation->getRelations();
+           
+			$json_response = [
+                                  "msg_status"=>HTTP_SUCCESS,
+                                  "msg_data"=>"Authentication ok.",
+                                  "result"=>$resultdata
+                                  
+            ];
+        }else {
+            $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+        }
+        } else{
+             $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+
+        }
+        header('Content-Type: application/json');
+		echo json_encode( $json_response );
+		exit;
+    }
+	
+	public function getInvestigations()
+    {
+        CUSTOMHEADER::getCustomHeader();
+        $json_response = [];
+        $headers = $this->input->request_headers();
+		$client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+		
+		$server_token="";
+        if($client_token!=""){
+            $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+           
+        } 
+        if($client_token!=""){
+        if($client_token->jti==$server_token ){
+        
+			$resultdata = $this->investigation->getInvestigations();
+           
+			$json_response = [
+                                  "msg_status"=>HTTP_SUCCESS,
+                                  "msg_data"=>"Authentication ok.",
+                                  "result"=>$resultdata
+                                  
+            ];
+        }else {
+            $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+        }
+        } else{
+             $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+
+        }
+        header('Content-Type: application/json');
+		echo json_encode( $json_response );
+		exit;
+    }
+	
+	public function getHospitals()
+    {
+        CUSTOMHEADER::getCustomHeader();
+        $json_response = [];
+        $headers = $this->input->request_headers();
+		$client_token = (!empty(CUSTOMHEADER::getAuthotoken($headers))?CUSTOMHEADER::getAuthotoken($headers):"");
+		
+		$server_token="";
+        if($client_token!=""){
+            $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+           
+        } 
+        if($client_token!=""){
+        if($client_token->jti==$server_token ){
+        
+			$resultdata = $this->hospital->getHospital();
            
 			$json_response = [
                                   "msg_status"=>HTTP_SUCCESS,

@@ -49,6 +49,16 @@ export class CommonService {
        });
     });
   }
+  
+  getHospitals(){
+    return new Promise(resolve => {
+      this.http.get(this.global.hospitalList_URL).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+   });
+  }
 
 
 }

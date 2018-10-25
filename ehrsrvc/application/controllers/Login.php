@@ -66,7 +66,8 @@ class Login  extends CI_Controller{
             'user_name' => $user->user_name,
             'user_role_name'=>$user->user_role_name,
             'user_role_code'=>$user->user_role_code,
-			'hospital_id'=>$user->hospital_id
+			'hospital_id'=>$user->hospital_id,
+			'doctor_id'=>$user->doctor_id
             ]
         ];
         $secreat_key = $this->config->item('enc_secrete_key');

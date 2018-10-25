@@ -11,16 +11,11 @@ import { DatashareService } from './../../service/datashare.service';
 import { PatientService } from './../../service/patient.service';
 import { Router } from '@angular/router';
 
-
-
-
-
-
-
   export interface Transaction {
     item: string;
     cost: number;
   }
+
 
   export interface PeriodicElement {
     name: string;
@@ -42,7 +37,18 @@ import { Router } from '@angular/router';
 
   interface Medicine{
     id: string,
-    name: string
+    name: string,
+    type: string
+  }
+
+  interface Dosage{
+    id: string,
+    value: string,
+  }
+
+  interface Frequency{
+    id: string,
+    frequency: string,
   }
 
   interface Relation{
@@ -60,13 +66,20 @@ import { Router } from '@angular/router';
     name: string;
   }
 
-  const ELEMENT_DATA: PeriodicElement[] = [
-    {position: '08-10-2018', name: 'Calpol', weight:'BD', symbol: '5 Days'},
-    {position: '08-10-2018', name: 'Boroline', weight:'Apply Locally', symbol: '3 Days'},
-    {position: '08-10-2018', name: 'ABC Syrup', weight:'10 ml', symbol: ''},
-    {position: '08-10-2018', name: 'Inject 1', weight:'IV stat', symbol: ''},
-   
-  ];
+  interface Hospitals{
+    id: string;
+    name: string;
+  }
+
+  export interface addedMedicineData {
+    datetd:any;
+    medicinetd:any;
+    dosagetd:any;
+    unittd:any;
+    daystd:any;
+    actiontd:any;
+  }
+
 
 @Component({
   selector: 'app-opdprepration',
@@ -76,6 +89,8 @@ import { Router } from '@angular/router';
 })
 export class OpdpreprationComponent implements OnInit, OnDestroy {
 
+
+
   patientData ;
 
   PatientID = null;
@@ -83,10 +98,17 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
   PatientType = null;
   PatientAge = null;
   
-  date = new FormControl(new Date());
-  serializedDate = new FormControl((new Date()).toISOString());
+  
+
+  //investigationDt = new FormControl(new Date());
+
+  //date = new FormControl(new Date());
+  //serializedDate = new FormControl((new Date()).toISOString());
 
   displayedColumns: string[] = [ 'datetd' , 'medicinetd' , 'dosagetd' , 'unittd', 'daystd' , 'actiontd'];
+  //dataSource = this.ELEMENT_DATAS;
+  dataSource = [];
+
   displayedColumnsReport: string[] = [ 'datetd' , 'reportdtd', 'actiontd'];
   transactions: Transaction[] = [
     {item: 'Beach ball', cost: 4},
@@ -94,14 +116,18 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
    
   ];
 
+  addedMeddata = [];
+  addedInvestigations = [];
+
   pcode;
+  presciptionHealthForm : FormGroup;
   presciptionForm : FormGroup;
 
   // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   // dataSource = ELEMENT_DATA;
 
     constructor(private router:Router, private commonService:CommonService, private symptomdiseaseService:SymptomdiseaseService , private datashareService:DatashareService , private patientService:PatientService ) {
-     
+
       this.presciptionForm = new FormGroup({
         symptomsMultiCtrl: new FormControl(''),
         symptomsMultiFilterCtrl: new FormControl(''),
@@ -110,17 +136,40 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
         date: new FormControl(new Date().toISOString()),
         medicineCtrl: new FormControl(''),
         medicineFilterCtrl: new FormControl(''),
+        dosageCtrl: new FormControl(''),
+        dosageFilterCtrl: new FormControl(''),
         instructionCtrl: new FormControl(''),
         instructionFilterCtrl: new FormControl(''),
+        investigationDt: new FormControl(new Date().toISOString()),
         reportsCtrl: new FormControl(''),
         reportsFilterCtrl: new FormControl(''),
         daysCtrl: new FormControl(''),
         finalsummryCtrl: new FormControl(''),
         sickCtrl: new FormControl(''),
-        sickdaysCtrl: new FormControl(''),
+        sickdaysCtrl: new FormControl({value: '', disabled: true}),
         approvalCtrl: new FormControl(''),
-        admobservCtrl: new FormControl('')
-       
+        admitCtrl: new FormControl(''),
+        observCtrl: new FormControl(''),
+        isReffHospital: new FormControl(''),
+        reffHospitalCtrl: new FormControl({value: '', disabled: true}),
+        reffHospitalFilterCtrl: new FormControl('')
+      });
+
+      this.presciptionHealthForm = new FormGroup({
+        hdnpatientID: new FormControl(''),
+        patientID: new FormControl({value: '', disabled: true}),
+        prescpID: new FormControl({value: '', disabled: true}),
+        patientType: new FormControl({value: '', disabled: true}),
+        patientName: new FormControl({value: '', disabled: true}),
+        patientAge: new FormControl({value: '', disabled: true}),
+        pulse: new FormControl(''),
+        tempratute: new FormControl(''),
+        anaemia: new FormControl(''),
+        bp: new FormControl(''),
+        jaundice: new FormControl(''),
+        odema: new FormControl(''),
+        height: new FormControl(''),
+        weight: new FormControl('')
       
       });
 
@@ -133,10 +182,20 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
             response = data;
             if(response.msg_status==200) {
               pdata = response.result ; 
-              this.PatientID = pdata.patient_code;
+             /* this.PatientID = pdata.patient_code;
               this.PatientName = pdata.patient_name;
               this.PatientType = pdata.patient_type;
-              this.PatientAge = response.age;
+              this.PatientAge = response.age;*/
+
+              this.presciptionHealthForm.patchValue({
+                hdnpatientID: pdata.patient_code,
+                patientID: pdata.patient_code,
+                prescpID: response.prescriptionID,
+                patientType: pdata.patient_type,
+                patientName: pdata.patient_name,
+                patientAge: response.age
+               
+              });
            }
             else{
               
@@ -152,31 +211,13 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
 
 
     version = VERSION;
-    /*
-    public medicineCtrl: FormControl = new FormControl();
-    public medicineFilterCtrl: FormControl = new FormControl();
-
-    public bankMultiCtrl: FormControl = new FormControl();
-    public bankMultiFilterCtrl: FormControl = new FormControl();
-
-    
-    public relationMultiCtrl: FormControl = new FormControl();
-    public relationMultiFilterCtrl: FormControl = new FormControl();
-
-        
-    public symptomsMultiCtrl: FormControl = new FormControl();
-    public symptomsMultiFilterCtrl: FormControl = new FormControl();
-
-    public diagnosisMultiCtrl: FormControl = new FormControl();
-    public diagnosisMultiFilterCtrl: FormControl = new FormControl();
-
-
-    */
-         
+ 
     private relations: Relation[] = [];
     private symptoms: Symptoms[] = [];
     private diagnosis: Diagnosis[] = [];
     private medicines: Medicine[] = [];
+    private dosages: Dosage[] = [];
+    private frequency: Frequency[] = [];
 
     instructions: Instruction[] = [
       {id: "1" , name: "OD"},
@@ -186,19 +227,20 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
     ];
 
 
-    medreports: Reports[] = [
-      {id: "1" , name: "Blood glucose test"},
-      {id: "1" , name: "X-Ray Test"}
-    ];
+    medreports: Reports[] = [];
+    refferHospitals: Hospitals[] = [];
 
 
     public filteredMedicines: ReplaySubject<Medicine[]> = new ReplaySubject<Medicine[]>(1);
+    public filteredDosages: ReplaySubject<Dosage[]> = new ReplaySubject<Dosage[]>(1);
+    public filteredFrequency: ReplaySubject<Frequency[]> = new ReplaySubject<Frequency[]>(1);
 
     public filterRelations: ReplaySubject<Relation[]> = new ReplaySubject<Relation[]>(1);
     public filteredRelationsMulti: ReplaySubject<Relation[]> = new ReplaySubject<Relation[]>(1);
 
-    public filteredInstruction: ReplaySubject<Instruction[]> = new ReplaySubject<Instruction[]>(1);
-    public filteredReports: ReplaySubject<Instruction[]> = new ReplaySubject<Instruction[]>(1);
+    public filteredInstruction: ReplaySubject<Frequency[]> = new ReplaySubject<Frequency[]>(1);
+    public filteredReports: ReplaySubject<Reports[]> = new ReplaySubject<Reports[]>(1);
+    public filteredHospitals: ReplaySubject<Hospitals[]> = new ReplaySubject<Hospitals[]>(1);
     
 
 
@@ -225,24 +267,65 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
         });
 
 
-        this.filteredInstruction.next(this.instructions.slice());
-        this.presciptionForm.get('instructionFilterCtrl').valueChanges
-          .pipe(takeUntil(this._onDestroy))
-          .subscribe(() => {
-            this.filterInstruction();
-          });
-
+        
+        this.getIvestigations();
         this.filteredReports.next(this.medreports.slice());
-        this.presciptionForm.get('filteredReports').valueChanges
+        this.presciptionForm.get('reportsFilterCtrl').valueChanges
           .pipe(takeUntil(this._onDestroy))
           .subscribe(() => {
             this.filterMedReports();
+          });
+
+        this.getHospitals();
+        this.filteredHospitals.next(this.refferHospitals.slice());
+        this.presciptionForm.get('reffHospitalFilterCtrl').valueChanges
+          .pipe(takeUntil(this._onDestroy))
+          .subscribe(() => {
+            this.filterHospital();
           });
 
 
           
     }
   
+    validateRecomChkBox(event,tag){
+      if(tag == "ADMIT"){
+        this.presciptionForm.patchValue({
+          observCtrl: false
+         });
+      }
+      if(tag == "OBSERVATION"){
+        this.presciptionForm.patchValue({
+          admitCtrl: false
+         });
+      }
+    }
+
+    enableSickDay(event){
+      if(event.checked){
+      
+        this.presciptionForm.controls['sickdaysCtrl'].enable(); 
+      }
+      else{
+        this.presciptionForm.patchValue({
+          sickdaysCtrl: ''
+        });
+        this.presciptionForm.controls['sickdaysCtrl'].disable(); 
+      }
+    }
+
+    enableReffHospital(event){
+      if(event.checked){
+      
+        this.presciptionForm.controls['reffHospitalCtrl'].enable(); 
+      }
+      else{
+        this.presciptionForm.patchValue({
+          reffHospitalCtrl: ''
+        });
+        this.presciptionForm.controls['reffHospitalCtrl'].disable(); 
+      }
+    }
   
     ngOnDestroy() {
       this._onDestroy.next();
@@ -306,21 +389,42 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
       );
     }
 
+    
+    private filterDosage() {
+      if (!this.dosages) {
+        return;
+      }
+      // get the search keyword
+      let search =  this.presciptionForm.get('dosageFilterCtrl').value;
+      if (!search) {
+        this.filteredDosages.next(this.dosages.slice());
+        return;
+      } else {
+        search = search.toLowerCase();
+      }
+      // filter the banks
+      this.filteredDosages.next(
+        this.dosages.filter(dosages => dosages.value.toLowerCase().indexOf(search) > -1)
+      );
+    }
+
+
+
     private filterInstruction() {
-      if (!this.instructions) {
+      if (!this.frequency) {
         return;
       }
       // get the search keyword
       let search =  this.presciptionForm.get('instructionFilterCtrl').value;
       if (!search) {
-        this.filteredInstruction.next(this.instructions.slice());
+        this.filteredInstruction.next(this.frequency.slice());
         return;
       } else {
         search = search.toLowerCase();
       }
       // filter the banks
       this.filteredInstruction.next(
-        this.instructions.filter(instruction => instruction.name.toLowerCase().indexOf(search) > -1)
+        this.frequency.filter(frequency => frequency.frequency.toLowerCase().indexOf(search) > -1)
       );
     }
 
@@ -342,16 +446,134 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
       );
     }
 
-
-    addMedicine() {
-      console.log("Medicine add");
+    private  filterHospital(){
+      if (!this.refferHospitals) {
+        return;
+      }
+      // get the search keyword
+      let search =  this.presciptionForm.get('reffHospitalFilterCtrl').value;
+      if (!search) {
+        this.filteredHospitals.next(this.refferHospitals.slice());
+        return;
+      } else {
+        search = search.toLowerCase();
+      }
+      // filter the banks
+      this.filteredHospitals.next(
+        this.refferHospitals.filter(reffhospital => reffhospital.name.toLowerCase().indexOf(search) > -1)
+      );
     }
 
+
+    addMedicine() {
+    
+      let date = this.presciptionForm.get('date').value;
+      let medicine = this.presciptionForm.get('medicineCtrl').value;
+      let dosage = this.presciptionForm.get('dosageCtrl').value;
+      let frequency = this.presciptionForm.get('instructionCtrl').value;
+      let days = this.presciptionForm.get('daysCtrl').value;
+    
+  
+    let data = {datetd: date, medicinetd:medicine, dosagetd:dosage, unittd: frequency , daystd:days , actiontd: 'x' };
+    this.addedMeddata.push(data);
+    
+
+    
+   // this.dataSource = this.ELEMENT_DATAS;
+  }
+
+  addInvestigation(){
+    let date = this.presciptionForm.get('investigationDt').value;
+    let report = this.presciptionForm.get('reportsCtrl').value;
+    let data = {invdate: date, reports:report, action: 'x' };
+    this.addedInvestigations.push(data);
+  }
+
+  removeData(i){
+    this.addedMeddata.splice(i, 1);
+  }
+
+  removeMedReports(i){
+    this.addedInvestigations.splice(i, 1);
+  }
+
     onSubmit(){
-      console.log(this.presciptionForm.value);
+     console.log(this.presciptionForm.value);
+     console.log(this.addedMeddata);
+     console.log(this.addedInvestigations);
+     console.log(this.presciptionHealthForm.value);
+
+
+
+
+    let response;
+    this.symptomdiseaseService.insertToOPD(this.presciptionHealthForm.value,this.presciptionForm.value,this.addedMeddata,this.addedInvestigations).then(data => {
+      response = data;
+    
+      if(response.msg_status==200) {
+      
+      
+
+      }
+      else{
+     
+      }
+     },
+       error => {
+         console.log("There is some error on submitting...");
+     });
+
     }
     
 
+
+    getIvestigations(){
+      let dataval;
+      let reportlist;
+      this.symptomdiseaseService.getInvestigations().then(data => {
+        dataval = data;
+        reportlist = dataval.result;
+        var count = Object.keys(dataval.result).length;
+                 let resultObj;
+                 for(let i = 0; i<count; i++){
+                  resultObj = {
+                      'name':dataval.result[i].investigation_name,
+                      'id': dataval.result[i].investigation_id
+                  }
+                  this.medreports.push(resultObj);
+              }
+              this.filteredReports.next(this.medreports.slice());
+
+               
+      },
+      error => {
+       console.log("There is some error in Investigation List...");
+     });
+    }
+
+    getHospitals(){
+      let dataval;
+      let hospitallist;
+      this.commonService.getHospitals().then(data => {
+        dataval = data;
+        hospitallist = dataval.result;
+        var count = Object.keys(dataval.result).length;
+                 let resultObj;
+                 for(let i = 0; i<count; i++){
+                  resultObj = {
+                      'name':dataval.result[i].hospital_name,
+                      'id': dataval.result[i].hospital_id
+                  }
+                  this.refferHospitals.push(resultObj);
+              }
+              this.filteredHospitals.next(this.refferHospitals.slice());
+
+               
+      },
+      error => {
+       console.log("There is some error in Investigation List...");
+     });
+    }
 
 
     getSymptoms(){
@@ -410,8 +632,6 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
     }
 
     getMedicine(obj){
-      console.log(obj);
-    
       let dataval;
       let medicinelist;
       this.medicines = [];
@@ -423,7 +643,8 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
                  for(let i = 0; i<count; i++){
                   resultObj = {
                       'name':dataval.result[i].medicine_name,
-                      'id': dataval.result[i].medicine_id	
+                      'id': dataval.result[i].medicine_id	,
+                      'type' : dataval.result[i].medicine_type
                   }
                   this.medicines.push(resultObj);
               }
@@ -441,6 +662,75 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
        console.log("There is some error in Medicine List...");
      });
     }
+
+    getOtherDependent(obj){
+      this.getDosage(obj);
+      this.getFrequency(obj);
+    }
+
+    getDosage(obj){
+      let dataval;
+      let dosagelist;
+      this.dosages = [];
+      this.symptomdiseaseService.getDosageByMedicine(obj.value).then(data => {
+        dataval = data;
+        dosagelist = dataval.result;
+        var count = Object.keys(dataval.result).length;
+                 let resultObj;
+                 for(let i = 0; i<count; i++){
+                  resultObj = {
+                      'id': dataval.result[i].dosage_id	,
+                      'value' : dataval.result[i].value
+                  }
+                  this.dosages.push(resultObj);
+              }
+             
+      this.filteredDosages.next(this.dosages.slice());
+      this.presciptionForm.get('dosageFilterCtrl').valueChanges
+        .pipe(takeUntil(this._onDestroy))
+        .subscribe(() => {
+          this.filterDosage();
+        });
+
+               
+      },
+      error => {
+       console.log("There is some error in Dosage List...");
+     });
+    }
+
+
+    getFrequency(obj){
+      let dataval;
+      let frequencylist;
+      this.frequency = [];
+      this.symptomdiseaseService.getFrequencyByMedicine(obj.value).then(data => {
+        dataval = data;
+        frequencylist = dataval.result;
+        var count = Object.keys(dataval.result).length;
+                 let resultObj;
+                 for(let i = 0; i<count; i++){
+                  resultObj = {
+                      'id': dataval.result[i].frequency_master_id	,
+                      'frequency' : dataval.result[i].frequency
+                  }
+                  this.frequency.push(resultObj);
+              }
+             
+              this.filteredInstruction.next(this.frequency.slice());
+              this.presciptionForm.get('instructionFilterCtrl').valueChanges
+                .pipe(takeUntil(this._onDestroy))
+                .subscribe(() => {
+                  this.filterInstruction();
+                });
+               
+      },
+      error => {
+       console.log("There is some error in Frequency List...");
+     });
+    }
+
+
 
 
     gotoList(){

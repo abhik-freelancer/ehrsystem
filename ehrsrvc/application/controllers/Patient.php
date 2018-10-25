@@ -7,6 +7,7 @@ class Patient extends CI_Controller{
         $this->load->model("Authorization_model", "authorisation", TRUE);
         $this->load->model("Menu_model", "menu", TRUE);
         $this->load->model("Patient_model", "patient", TRUE);
+        $this->load->model("OPD_model", "opd", TRUE);
 
         
     }
@@ -174,6 +175,8 @@ class Patient extends CI_Controller{
        
         if($client_token!=""){
         if($client_token->jti==$server_token ){
+			$token_data = $client_token->data;
+			$hospital_id = $token_data->hospital_id;
 			
             $postdata = file_get_contents("php://input");
 			$request = json_decode($postdata);
@@ -184,7 +187,8 @@ class Patient extends CI_Controller{
                      "msg_status"=>HTTP_SUCCESS,
                      "msg_data"=>"Authentication ok.",
                      "result"=>$resultdata,
-					 "age" => $this->getAge($resultdata->dob)
+					 "age" => $this->getAge($resultdata->dob),
+					 "prescriptionID" => $this->opd->getLatestPrescriptionID($hospital_id)
             ];
             
         }else{

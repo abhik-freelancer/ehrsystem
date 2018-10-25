@@ -9,8 +9,8 @@ export class GlobalconstantService {
 
  // private APIURL = "http://192.168.2.16:8088/ehrsystem/ehrsrvc/";
   //private APIURL = "http://192.168.2.10/ehrsystem/ehrsrvc/";
-  private APIURL = "http://127.0.0.1:8011/ehrsystem/ehrsrvc/";
-  //private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
+  //private APIURL = "http://127.0.0.1:8011/ehrsystem/ehrsrvc/";
+  private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
   private APIKEY = "24ecdccb1258eaacfd441e012ac034392403c692";
 
   // URL INFO
@@ -27,6 +27,7 @@ export class GlobalconstantService {
   public patientBycode_URL = this.APIURL+"patient/getPatientByCode";
 
   public todaysReg_URL = this.APIURL+"registration/getTodaysRegistration";
+  public isregisterdToday_URL = this.APIURL+"registration/isRegisteredToday";
  
 
   // Blood Group
@@ -35,11 +36,17 @@ export class GlobalconstantService {
 
   // Relations
   public relationList_URL = this.APIURL+"master/getRelations";
+  public hospitalList_URL = this.APIURL+"master/getHospitals";
   public estateList_URL = this.APIURL+"estate/getEstate";
 
+  public investigationlist_URL = this.APIURL+"master/getInvestigations";
   public symptomlist_URL = this.APIURL+"symptoms/getSymptoms";
   public diseaselist_URL = this.APIURL+"disease/getDiseaseBySymptoms";
   public medicinelist_URL = this.APIURL+"medicine/getMedicineBySymptoms";
+  public dosageByMedlist_URL = this.APIURL+"medicine/getDosageByMedicine";
+  public frequencyByMedlist_URL = this.APIURL+"medicine/getFrequencyByMedicine";
+
+  public insertOPD_URL = this.APIURL+"opd/insertIntoOpd";
 
   public todaysRegDoct_URL = this.APIURL+"registration/getTodaysRegDoct";
 

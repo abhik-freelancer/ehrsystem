@@ -67,7 +67,7 @@ export class TodaysregistrationComponent implements OnInit {
   }
 
   firstTab(e){
-    console.log("fgdsf"+e);
+    //console.log("fgdsf"+e);
   }
   ngOnInit() {
     this.isButtonActive = true;
@@ -77,7 +77,7 @@ export class TodaysregistrationComponent implements OnInit {
    this.getTodaysRegForDocCount("T/W","N");
    this.getTodaysRegForDocCount("Dep","N");
    this.getTodaysRegForDocCount("N/W","N");
-   console.log("hello again");
+ 
   }
 
 

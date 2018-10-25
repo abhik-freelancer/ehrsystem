@@ -39,3 +39,15 @@ color: #366b05;
     margin-right: auto;
     display: block;
 }
+
+.error_cls{
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #f5f5f5;
+    font-weight: 500;
+    background: #de4040;
+    padding: 0;
+    width: 85%;
+    border-radius: 4px;
+}

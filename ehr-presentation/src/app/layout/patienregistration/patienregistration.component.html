@@ -18,12 +18,18 @@
                                             <input matInput placeholder="Enter Patient ID" formControlName="patientID" autocomplete="off" />
                                         </mat-form-field> -->
 
-                                        <mat-select formControlName="patientID" placeholder="Search Patient ID" #singleSelect >
-                                            <ngx-mat-select-search  formControlName="pcodeFilterCtrl"></ngx-mat-select-search>
-                                            <mat-option *ngFor="let bank of filteredMedicines | async" [value]="bank">
-                                                  {{bank.code}}
+                                    <mat-form-field class="fullwidthinp">
+                                        <mat-select formControlName="patientID" placeholder="Search By Patient ID" disableOptionCentering #singleSelect>
+                                            <ngx-mat-select-search  formControlName="pcodeFilterCtrl"
+                                            [placeholderLabel]="'Search'" 
+                                            [noEntriesFoundLabel]="'no records found'"
+                                            ></ngx-mat-select-search>
+                                            <mat-option [value] ="resetSelect">Select</mat-option>
+                                            <mat-option *ngFor="let pcode of filteredPatientCode | async" [value]="pcode">
+                                                  {{pcode.code}}
                                             </mat-option>
                                         </mat-select>
+                                    </mat-form-field>
 
                                     </div>
                                     <div fxFlex="5%">
@@ -32,7 +38,16 @@
 
                                     <div fxFlex="40%">
                                         <mat-form-field class="fullwidthinp">
-                                            <input matInput placeholder="Enter Aadhar No"  formControlName="patientAadhar" autocomplete="off" >
+                                            <mat-select formControlName="patientAadhar" placeholder="Search By Aadhar No" disableOptionCentering #singleSelect >
+                                                <ngx-mat-select-search  formControlName="aadharFilterCtrl"
+                                                [placeholderLabel]="'Search'" 
+                                                [noEntriesFoundLabel]="'no records found'"
+                                                ></ngx-mat-select-search>
+                                                <mat-option [value] ="resetSelect">Select</mat-option>
+                                                <mat-option *ngFor="let paadhar of filteredPatientAadhar | async" [value]="paadhar">
+                                                      {{paadhar.aadhar}}
+                                                </mat-option>
+                                            </mat-select>
                                         </mat-form-field>
                                     </div>
 
@@ -46,7 +61,18 @@
                                  
                                      <div fxFlex="30%">
                                         <mat-form-field class="fullwidthinp">
-                                            <input matInput placeholder="Enter Patient Name" formControlName="patientNameCtrl" autocomplete="off" />
+                                            <!--<input matInput placeholder="Enter Patient Name" formControlName="patientNameCtrl" autocomplete="off" />-->
+
+                                            <mat-select formControlName="patientNameCtrl" placeholder="Search Patient Name" disableOptionCentering #singleSelect >
+                                                <ngx-mat-select-search  formControlName="patientNameFilterCtrl"
+                                                [placeholderLabel]="'Search'" 
+                                                [noEntriesFoundLabel]="'no records found'"
+                                                ></ngx-mat-select-search>
+                                                <mat-option *ngFor="let pname of filteredPatientName | async" [value]="pname.name">
+                                                      {{pname.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        
                                         </mat-form-field>
                                     </div>
                                     <div fxFlex="30%">
@@ -77,7 +103,24 @@
                             <mat-spinner [diameter]="40" *ngIf="searchLoader" class="center-obj"></mat-spinner>
                         </div>
 
-                        
+
+                        <div id="err_block">
+                            <p class="error_cls" *ngIf="isRegAlreadyDone_Err" style="margin:10px auto;margin-bottom:0px">This Patient is already registered for today.
+                                <button mat-icon-button (click)="removeError()" >
+                                   <mat-icon>clear</mat-icon>
+                                </button>
+                            </p>
+                            <p class="error_cls" *ngIf="basicSearchValidErr" style="margin:10px auto;margin-bottom:0px">Select atleast one search option
+                                <button mat-icon-button (click)="removeError()" >
+                                   <mat-icon>clear</mat-icon>
+                                </button>
+                            </p>
+                            <p class="error_cls" *ngIf="advSearchValidErr" style="margin:10px auto;margin-bottom:0px">Patient Name,DOB,Mobile No is required
+                                <button mat-icon-button (click)="removeError()" >
+                                   <mat-icon>clear</mat-icon>
+                                </button>
+                            </p>
+                        </div>
                           
                       </div><!--end of fieldsearch-->
 

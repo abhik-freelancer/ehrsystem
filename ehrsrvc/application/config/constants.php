@@ -92,3 +92,16 @@ define('HTTP_INSERT',500);
 define('HTTP_UPDATE',501);
 define('HTTP_LOGIN',100);
 
+
+define('MEDICINE_TYPE',
+		serialize(
+			array(
+			'Tablet'=>'Tablet',
+			'Syrup'=>'Syrup',
+			'Drop'=>'Drop',
+			'Injection'=>'IV',
+			'Ointment' => 'Ointment'
+			)
+		)
+);
+

@@ -16,10 +16,9 @@ class Patient_model extends CI_Model{
                          ->join("patient_type","patients.patient_type_id = patient_type.patient_type_id","LEFT")
                          ->get(); */
 		
-		$query = $this->db->select("patients.patient_code,patients.patient_name,patients.mobile_one,patients.employee_id")
+		$query = $this->db->select("patients.patient_id,patients.patient_code,patients.patient_name,patients.mobile_one,patients.employee_id,patients.adhar")
                          ->from("patients") 
-                      
-                         ->get();
+						 ->get();
         if($query->num_rows()>0){
             $patient_data=$query->result();
             }
@@ -148,16 +147,28 @@ class Patient_model extends CI_Model{
 		$patient_data="";
 		$searchType = $request->stype;
 		$formValue = $request->values;
+		
+		
 		if($searchType=="BASIC"){
+			$pdetail = $formValue->patientID;
+			$padhardtl = $formValue->patientAadhar;
 			
-			$patientID = $formValue->patientID;
-			$patientAadhar = $formValue->patientAadhar;
+			$pAadharNo = NULL;
+			$pId = NULL;
 			
-			 $query = $this->db->select("patients.*,patient_type.*")
+			if($padhardtl){
+				 $pAadharNo = $padhardtl->aadhar;
+			}
+			if($pdetail){
+				 $pId = $pdetail->code;
+			}
+
+				$query = $this->db->select("patients.*,DATE_FORMAT(patients.dob,'%d-%m-%Y') AS pdob,patient_type.*",FALSE)
                          ->from("patients") 
                          ->join("patient_type","patients.patient_type_id = patient_type.patient_type_id","LEFT")
-						 ->where("(patients.patient_code = '$patientID' OR patients.adhar = '$patientAadhar')")
+						 ->where("(patients.patient_code = '$pId' OR patients.adhar = '$pAadharNo')")
                          ->get();
+						
 		}
 		else if($searchType=="ADV"){
 			$patientName = $formValue->patientNameCtrl;
@@ -166,17 +177,19 @@ class Patient_model extends CI_Model{
 			
 			$where = [
 				"patients.patient_name" => $patientName,
-				"patients.dob" => $patientDOB,
+				"DATE_FORMAT(patients.dob,'%Y-%m-%d')" =>  date('Y-m-d', strtotime($patientDOB)),
 				"patients.mobile_one" => $patientMobile
 			];
 			
-			 $query = $this->db->select("patients.*,patient_type.*")
+			 $query = $this->db->select("patients.*,
+										DATE_FORMAT(patients.dob,'%d-%m-%Y') AS pdob,
+										patient_type.*",FALSE)
                          ->from("patients") 
                          ->join("patient_type","patients.patient_type_id = patient_type.patient_type_id","LEFT")
 						 ->where($where)
                          ->get();
 		}
-		//echo $this->db->last_query();
+		
 		if($query->num_rows()>0){
 				$patient_data = $query->row();
             }
