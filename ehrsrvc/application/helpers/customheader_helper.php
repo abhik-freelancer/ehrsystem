@@ -27,10 +27,13 @@ class CUSTOMHEADER
     {
         //$token_identification = "";
         $token="";
+       // print_r($header);
         
-        
-        if(!empty($header['Authorization'])){
+        if(isset($header['Authorization']) && $header['Authorization']!="" ){
         $string_authorisation = explode(" ", $header['Authorization']); 
+		
+		//print_r($string_authorisation);
+		
         $secreat_key =config_item('enc_secrete_key'); //$this->config->item('enc_secrete_key');
         
         //echo($string_authorisation[1]."<br>");
@@ -39,14 +42,15 @@ class CUSTOMHEADER
         //echo("secreat_key".$secreat_key);
         
         $token = JWT::decode($string_authorisation[1], $secreat_key, array('HS512'));
+		//var_dump($token);
         }
         //$token_identification = $token->jti;
        // echo $token;
 //        echo("<pre>");
 //        print_r($token);
 //        echo("</pre>");exit();
-        
-        return $token;
+      //var_dump($token);
+       return $token;
         
         
     }
